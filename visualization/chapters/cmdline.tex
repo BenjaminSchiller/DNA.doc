@@ -1,0 +1,37 @@
+\chapter{Commandline-Parameters}
+The program can be started with different commandline-parameters. The syntax is as follows:\
+\center{java --jar dna--vis.jar \quad [--c \textless config--path\textgreater ] [--d \textless data--dir\textgreater ] [--h] [--l] [--p] [--z]}\
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|}\hline
+	\textbf{Parameter} & \textbf{Description}\\
+	\hline
+	--c \textless config--path\textgreater & Used to give the program a path to  own configuration file.\\
+	& If left out, the default-config will be used. \\
+	\hline
+	--d \textless data--dir\textgreater & Overwrites the default data-directory given in \\
+	& the configuration file. \\
+	\hline
+	--h & Displays the help message. \\
+	\hline
+	--l & Launches the GUI in Livedisplay-Mode.\\
+	\hline
+	--p & Launches the GUI in Playback-Mode.\\
+	\hline
+	--z & Enables zipped batches.\\
+	\hline
+\end{tabular}
+\caption{Explanation of the commandline-parameters.}
+\label{tab:cmdline1}
+\end{table}
+
+\section{Examples}
+\begin{flushleft}
+java --jar dna--vis.jar --h\\
+java --jar dna--vis.jar --c "config/min\textunderscore cfg.cfg"\\
+java --jar dna--vis.jar --l --d "data/test1337/run.5/" --z\\
+java --jar dna--vis.jar --d "data/dd/run.0"\\
+java --jar dna--vis.jar --c "config/gui\textunderscore min.cfg" --d "data/cc/run.42/" --p --z\\
+\end{flushleft}
