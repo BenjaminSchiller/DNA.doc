@@ -1,0 +1,176 @@
+\chapter{Plotting in DNA}
+This chapter will deal with the general plotting mechanisms in DNA and how to use them. All plots are created by using gnuplot.
+
+\section{What can be plotted?}
+In general it is possible to plot all values that are being gathered during generation. This covers runtimes and statistics aswell as data contained in metrics, namely values, distributions and nodevaluelists.
+
+\section{How to plot?}
+The plotting class dna.plot.Plotting.java holds several public methods, which can be called to start the plotting process. Overloading allows to call these methods either with a single SeriesData object or with an array of these. It is either possible to plot aggregated data of several runs, or the non-aggregated runs themself. Note that the process of comparing and plotting multiple series differs from plotting only a single series. Therefore, if only one series is handed over, the single plotting process will be performed. For more than one series the multiple plotting process will be executed respectively. For more details see section \ref{sec:methods} Plotting methods.
+
+\section{PlottingConfig}
+The PlottingConfig class provides a way for the user to easily configure the plotting process. A PlottingConfig object can be instantiated, configured and then handed over to a plotting method. It holds several methods to customize the plotting, for example set a timestamp window and stepsize for the plots. Furthermore PlotFlag objects can be handed over to partly enable the plotting of choosen data, instead of plotting the whole series. See table \ref{tab:plot-methods} for more details.
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|}\hline
+	\textbf{Method} & \textbf{Description}\\
+	\hline
+	setDistPlotType(DistPlotType d) & Sets if distributions will be plotted 	normally,\\
+	& as cdf or both.\\
+	\hline
+	setNvlOrder(NodeValueListOrder n) & Sets if the nodevaluelist‘s will be 	ordered,\\
+	& ascending or descending\\
+	\hline
+	setNvlOrderBy( & Sets which value will be used\\
+	NodeValueListOrderBy n) & for the ordering, for example ordering by\\
+	& index or by average.\\
+	\hline
+	setPlotCustomValues(boolean b) & Enables/disables custom value plots.\\
+	\hline
+	setPlotDistributions(boolean b) & Enables/disables distribution plots.\\
+	\hline
+	setPlotMetricValues(boolean b) & Enables/disables metric value plots.\\
+	\hline
+	setPlotNodeValueLists(boolean b) & Enables/disables nodevaluelist plots.\\
+	\hline
+	setPlotRuntimes(boolean b) & Enables/disables runtime plots.\\
+	\hline
+	setPlotStatistics(boolean b) & Enables/disables statistic plots.\\
+	\hline
+	setPlotInterval(long from, & Sets a plot interval. Will only plot batches\\
+	long to, long stepsize) & whose timestamps are inside the interval.\\
+	\hline
+	setPlotIntervalByIndex(int from, & Sets a plot interval. Will only plot batches\\
+	int to, int stepsize) & whose indices are inside the interval.\\
+	\hline
+	setPlotStyle(PlotStyle s) & Sets the plot style of all plots. For example:\\
+	& linespoint, dots, points and more.\\
+	\hline
+	setPlotType(PlotType t) & Sets what values of the data will be\\
+	& plotted. For example: average, minimum...\\
+	\hline
+\end{tabular}
+\caption{PlottingConfig API methods.}
+\label{tab:plot-methods}
+\end{table}
+
+\section{PlotFlag}
+PlotFlag objects are used to define what data will be plotted. They can either be handed over to the plotting methods directly or set in a PlottingConfig object. Note that if no flag is handed over, the program will use a plotAll-flag and therefore plot all types of data. Table \ref{tab:plot-flags} shows all available flags.
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|}\hline
+	\textbf{Flag} & \textbf{Description}\\
+	\hline
+	plotCustomValues & Enables custom value plots.\\
+	\hline
+	plotDistributions & Enables the plotting of distributions.\\
+	\hline
+	plotMetricValues & Enables the plotting of metric values.\\
+	\hline
+	plotNodeValueLists & Enables the plotting of nodevaluelists.\\
+	\hline
+	plotRuntimes & Enables the plotting of runtimes.\\
+	\hline
+	plotStatistics & Enables the plotting of statistics.\\
+	\hline
+	plotMetricEntirely & Plots all metrics entirely. Has the same effect as the\\
+	& combination of plotDistribution, plotMetricValues\\
+	& and plotNodeValueLists. \\
+	\hline
+	plotSingleScalarValues & Plots all single scalar values. Has the same effect as\\
+	& the combination of plotCustomValues, plotMetricValues,\\
+	& plotRuntimes and plotStatistics.\\
+	\hline
+	plotMultiScalarValues & Plot all multi scalar values. Has the same effect as the\\
+	& combination of plotDistributions and plotNodeValueLists.\\
+	\hline
+	plotAll & Enables all flags.\\
+	\hline
+\end{tabular}
+\caption{List of PlotFlag's}
+\label{tab:plot-flags}
+\end{table}
+
+\section{Plotting methods}
+\label{sec:methods}
+The following is a list of supported plotting methods in the current build and a brief explanation.
+
+\textbf{Simple methods which plot the series to the destination directory.}\\
+- plot(SeriesData seriesData, String dstDir)\\
+- plot(SeriesData[] seriesData, String dstDir)
+
+\textbf{Plot only data enabled by the PlotFlag‘s to the destination directory.}\\
+- plot(SeriesData seriesData, String dstDir, PlotFlag… flags)\\
+- plot(SeriesData[] seriesData, String dstDir, PlotFlag… flags)
+
+\textbf{Plot the series to the destination directory and takes the given PlottingConfig object to configure the plotting process.}\\
+- plot(SeriesData seriesData, String dstDir, PlottingConfig config)\\
+- plot(SeriesData[] seriesData, String dstDir, PlottingConfig config)
+
+\textbf{Plot data in the given timestamp window to the destination directory. (Note: If no PlotFlag‘s are handed over, all data will be plotted.)}\\
+- plotFromTo(SeriesData seriesData, String dstDir, long timestampFrom, long timestampTo, long stepsize, PlotFlag... flags)\\
+- plotFromTo(SeriesData[] seriesData, String dstDir, long timestampFrom, long timestampTo, long stepsize, PlotFlag... flags)
+
+\textbf{Plot data in the given index window to the destination directory.
+(Note: If no PlotFlag‘s are handed over, all data will be plotted.)}\\
+- plotFromToByIndex(SeriesData seriesData, String dstDir, int indexFrom, int indexTo, int stepsize, PlotFlag... flags)\\
+- plotFromToByIndex(SeriesData[] seriesData, String dstDir, int indexFrom, int indexTo, int stepsize, PlotFlag... flags)
+
+\textbf{Plot the (non-aggregated) run with index i of the series to the destination directory.}\\
+- plotRun(SeriesData seriesData, int i, String dstDir, PlotFlag… flags)\\
+- plotRun(SeriesData seriesData, int i, String dstDir, PlottingConfig config)
+
+\textbf{Plot all (non-aggregated) runs of the series separately to the destination directory.}\\
+- plotRunsSeparately(SeriesData seriesData, String dstDir, PlotFlag… flags)\\
+- plotRunsSeparately(SeriesData seriesData, String dstDir, PlottingConfig config)
+
+\textbf{Plot all (non-aggregated) runs of the series in combinated plots to the destination directory.}\\
+- plotRunsCombined(SeriesData seriesData, String dstDir, PlotFlag… flags)\\
+- plotRunsCombined(SeriesData seriesData, String dstDir, PlottingConfig config)
+
+\textbf{Plot the (non-aggregated) run with index i from all series in combinated plots to the destination directory.}\\
+- plotRun(SeriesData[] seriesData, int i, String dstDir, PlotFlag… flags)\\
+- plotRun(SeriesData[] seriesData, int i, String dstDir, PlottingConfig config)
+
+\textbf{Plot all (non-aggregated) runs of the series to the destination directory. The i-th run of each series will be combined.}\\
+- plotRunsSeparately(SeriesData[] seriesData, String dstDir, PlotFlag… flags)\\
+- plotRunsSeparately(SeriesData[] seriesData, String dstDir, PlottingConfig config)
+
+\section{Example}
+The following code snippet shows an example on how to use a PlottingConfig object in order to configure the plotting process.
+
+\begin{figure} [bh]
+\begin{lstlisting}
+public static void main(String[] args) throws AggregationException,
+IOException, MetricNotApplicableException, InterruptedException {
+	// init graph- & batch generators
+	GraphGenerator gg1 = new RandomGraph(GDS.directed, 100, 300);
+	BatchGenerator bg1 = new RandomBatch(0, 0, 10, 5);
+
+	// define metrics
+	Metric[] m1 = new Metric[] { new DegreeDistributionR() };
+
+	// create series and generate it
+	Series s1 = new Series(gg1, bg1, m1, "data/test1/", "Test1");
+	SeriesData sd1 = s1.generate(1, 100);
+
+	// create PlottingConfig object, only plot runtimes
+	PlottingConfig config = new PlottingConfig(PlotFlag.plotRuntimes);
+
+	// set plot interval: will plot every 5th batch in [0:100]
+	config.setPlotInterval(0, 100, 5);
+	
+	// set to plot the median of all aggregated data with lines
+	config.setPlotStyle(PlotStyle.lines);
+	config.setPlotTyle(PlotType.median);
+	
+ 	// more configuration possible here
+ 	
+	// start plotting
+	Plotting.plot(sd1, "data/test1/plots/", config);
+}
+\end{lstlisting}
+\caption{PlottingConfig example.}
+\label{code:example}
+\end{figure}
