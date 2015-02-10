@@ -1,0 +1,166 @@
+\chapter{LaTeX in DNA}
+This chapter will deal with the general LaTeX-output mechanisms in DNA and how to use them. All plots that may be generated throughout the output process are created by using gnuplot.
+
+\section{What can be exported?}
+In general it is possible to output all values that are being gathered during generation. This covers runtimes and statistics aswell as data contained in metrics, namely values, distributions and nodevaluelists. However, at the moment it is only possible to generate one document for exactly one series at a time.
+
+\section{How to get started?}
+The LaTeX class dna.latex.Latex.java holds several public methods, which can be called to start the output process. If the plotting has been done beforehand the latex process might can be started immediately. If this is not the case, there are also methods which first plot the data and then generate a latex document. See the section \ref{sec:methods} for further details. Note: At the moment it is only possible to export aggregated data of a single series. 
+
+\section{LatexConfig}
+The LatexConfig class provides a way for the user to easily configure the output process. A TexConfig object can be instantiated, configured and then handed over to a latex-method. It holds several methods to customize the resulting document, for example set a timestamp window and stepsize for the data. Furthermore PlottingConfig objects can be handed over to customize the shown plots of data. See table \ref{tab:tex-methods} for more details about the TexConfig-API. More information about PlottingConfig objects may be found in the plotting manual.
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|}\hline
+	\textbf{Method} & \textbf{Description}\\
+	\hline
+	setDateFormat( & Sets a DateFormat that will\\
+	SimpleDateFormat dateFormat) & be used for the timestamp representation.\\
+	\hline
+	setDateFormat(String pattern) & See above.\\
+	\hline
+	setMapping( & Sets a map that maps timestamps.\\
+	HashMap $\langle$Long,Long$\rangle$ map) &\\
+	\hline
+	setOutputInterval(long from,& Sets an output interval. Will only\\
+	long to, long stepsize) & output batches who are in the interval.\\
+	\hline
+	setOutputIntervalByIndex(long from,& Sets an output interval. Will only output\\
+	long to, long stepsize) & batches whose indices are in the interval.\\
+	\hline
+	setPlotFlags(PlotFlag... flags) & Sets what data will be added.\\
+	\hline
+	setScaling(String scaling) & Sets a scaling for the batch timestamps.\\
+	\hline
+	setTableFlags(TableFlag... flags) & Sets what type of data will be shown in\\
+	& data tables. Example: Average \& Max.\\
+	\hline
+\end{tabular}
+\caption{TexConfig API methods.}
+\label{tab:tex-methods}
+\end{table}
+
+\section{TableFlag}
+TableFlag's define what types of data will be added to the data tables and in which order. They may be handed over to a TexConfig constructor at initialization or with the setTableFlags(..) method. Each TableFlag represents one column in the data table. For example: Handing over TableFlag.Average and TableFlag.Median the data tables will have two columns, the values average in the first and its median in the second column. If no flag is handed over the program will include the average data by default. The table \ref{tab:table-flags} shows all available TableFlag's.
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|}\hline
+	\textbf{Flag} & \textbf{Description}\\
+	\hline
+	all & Includes all available data.\\
+	\hline
+	Average & Includes the average data.\\
+	\hline
+	ConfLow & Includes the confidence intervals lower bound.\\
+	\hline
+	ConfUp & Includes the confidence intervals upper bound.\\
+	\hline
+	Max & Includes the maximum data.\\
+	\hline
+	Median & Includes the median of the data.\\
+	\hline
+	Min & Includes the minimum data.\\
+	\hline
+	Var & Includes the variance data.\\
+	\hline
+	VarLow & Includes the variances lower bound.\\
+	\hline
+	VarUp & Includes the variances upper bound.\\
+	\hline
+\end{tabular}
+\caption{List of TableFlag's.}
+\label{tab:table-flags}
+\end{table}
+
+\section{PlotFlag}
+PlotFlag objects are used to define what data will be plotted and added to the document. They can either be handed over to the TexConfig directly when the constructor is called or later with the setPlotFlags(..) method. Note that if no flag is handed over, the program will use a plotAll-flag and therefore include all available data. Table \ref{tab:plot-flags} shows all flags that can be used.
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|}\hline
+	\textbf{Flag} & \textbf{Description}\\
+	\hline
+	plotDistributions & Includes distributions.\\
+	\hline
+	plotMetricValues & Includes metric values.\\
+	\hline
+	plotNodeValueLists & Includes nodevaluelists.\\
+	\hline
+	plotRuntimes & Includes runtimes.\\
+	\hline
+	plotStatistics & Includes statistics.\\
+	\hline
+	plotMetricEntirely & Includes all metrics entirely. Has the same effect as the\\
+	& combination of plotDistribution, plotMetricValues\\
+	& and plotNodeValueLists. \\
+	\hline
+	plotSingleScalarValues & Includes all single scalar values. Has the same effect as\\
+	& the combination of plotCustomValues, plotMetricValues,\\
+	& plotRuntimes and plotStatistics.\\
+	\hline
+	plotMultiScalarValues & Includes all multi scalar values. Has the same effect as the\\
+	& combination of plotDistributions and plotNodeValueLists.\\
+	\hline
+	plotAll & Enables all flags.\\
+	\hline
+	plotCustomValues & Is used for plotting purposes only, has no effect.\\
+	\hline
+\end{tabular}
+\caption{List of PlotFlag's.}
+\label{tab:plot-flags}
+\end{table}
+
+\section{Latex methods}
+\label{sec:methods}
+The following is a list of supported latex methods in the current build and a brief explanation.
+
+\textbf{creates the document at the destination directory.}\\
+- writeTex(SeriesData seriesData, String dstDir, String filename, TexConfig config, PlottingConfig pconfig) (Note: It is necessary to set the plot directory in the TexConfig)\\
+
+\textbf{Creates the document at the destination directory but only includes data within the timestamp window.}\\
+- writeTexFromTo(SeriesData seriesData, String dstDir, String filename, String plotDir, long from, long to, long stepsize, PlottingConfig pconfig)\\
+
+\textbf{Plots the series and then creates the document at the destination directory.}\\
+- writeTexAndPlot(SeriesData seriesData, String dstDir, String filename)\\
+- writeTexAndPlot(SeriesData seriesData, String dstDir, String filename, TexConfig config)\\
+- writeTexAndPlot(SeriesData seriesData, String dstDir, String filename, TexConfig config, PlottingConfig pconfig)\\
+\\
+
+\textbf{Plots data in the given timestamp window and then creates the document at the destination directory but only includes data within the window.}\\
+- writeTexAndPlotFromTo(SeriesData seriesData, String dstDir, String filename, long from, long to, long stepsize)\\
+
+\section{Example}
+The following code snippet shows an example on how to use a TexConfig and PlottingConfig object in order to configure the latex process.
+
+\begin{figure} [bh]
+\begin{lstlisting}
+public static void main(String[] args) throws AggregationException,
+		IOException, MetricNotApplicableException,
+		InterruptedException {
+	String seriesDir = dir + "series/";
+
+	// initialization
+	GraphGenerator gg1 = new RandomGraph(GDS.undirected, 100, 300);
+	BatchGenerator bg1 = new RandomBatch(0, 0, 10, 15);
+	Metric[] m1 = new Metric[] { new DegreeDistributionR(),
+			new UndirectedClusteringCoefficientR() };
+
+	// create series and generate it
+	Series s = new Series(gg1, bg1, m1, seriesDir, "series");
+	SeriesData sd = s.generate(1, 100);
+
+	// create configs, only plot metric
+	TexConfig config = new TexConfig(dir, sd.getDir(), dir + "plots/",
+			new PlotFlag[] {PlotFlag.plotMetricEntirely},
+			TableFlag.VarLow, TableFlag.Var, TableFlag.VarUp);
+	PlottingConfig pconfig = new PlottingConfig(PlotFlag.plotMetricEntirely);
+
+	// plot and tex
+	Latex.writeTexAndPlot(sd, dir, "preamble.tex", config, pconfig);
+}
+\end{lstlisting}
+\caption{LaTeX example.}
+\label{code:example}
+\end{figure}

@@ -1,0 +1,169 @@
+%
+% header.tex
+%
+\documentclass[%
+	pagesize=pdftex,%     PDFTex verwenden
+	paper=a4,%            A4 Papier
+	twoside=false,%       Einseitig
+	parskip=half,%        Europischer Satz mit abstand zwischen Abstzen
+	chapterprefix,%       Kapitel anschreiben als Kapitel
+	fontsize=12pt,%       Grssere Schrift, besser lesbar am bildschrim
+	english,
+]{scrreprt}
+
+\usepackage[margin=2.5cm, left=3cm]{geometry}
+
+\usepackage{scrpage2}
+
+%
+% Pakete um Latin1 Zeichnenstze verwenden zu knnen und die dazu
+%  passenden Schriften.
+%
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+
+%
+% Paket fr die Indexerstellung.
+%
+\usepackage{makeidx}
+
+\usepackage[nohyperlinks,printonlyused]{acronym}
+
+%
+% Paket fr bersetzungen ins Deutsche
+%
+\usepackage[english]{babel}
+
+%
+% Paket um die Symbole des TS1 Zeichensatzes verwenden zu knnen.
+%
+%\usepackage{textcomp}
+
+%
+% Paket zum Erweitern der Tabelleneigenschaften
+%
+%\usepackage{array}
+
+%
+% Paket um Grafiken einbetten zu knnen
+%
+\usepackage[pdftex]{graphicx}
+\usepackage{subfigure}
+\usepackage[margin=10pt,font=small,labelfont=bf,
+labelsep=endash]{caption}
+
+%
+% Spezielle Schrift verwenden.
+%
+\usepackage{microtype}
+
+%
+% Spezielle Schrift im Koma-Script setzen.
+%
+\setkomafont{sectioning}{\normalfont\bfseries}
+%\setkomafont{captionlabel}{\normalfont\bfseries}
+\setkomafont{descriptionlabel}{\normalfont\bfseries}
+
+%
+% Zeilenumbruch bei Bildbeschreibungen.
+%
+\setcapindent{1em}
+
+%
+% kopf und fusszeilen
+%
+\pagestyle{useheadings}
+
+\renewcommand{\rmdefault}{bch}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{txtt}
+
+%
+% Package fr Farben im PDF
+%
+\usepackage{color}
+
+%
+% Paket fr Links innerhalb des PDF Dokuments
+%
+\definecolor{LinkColor}{rgb}{0,0,0.5}
+\usepackage[%
+	pdftitle={\Project \DocumentType},%
+	pdfauthor={\AuthorName},
+	bookmarksopen=true,
+	bookmarksopenlevel=1
+	]{hyperref}
+\hypersetup{colorlinks=true,%
+	linkcolor={black},%
+	citecolor={black},%
+	filecolor={black},%
+	menucolor={black},%
+	pagecolor={black},%
+	urlcolor={black}}
+\usepackage[all]{hypcap}
+\usepackage{hypbmsec}
+
+%
+% Paket um Listings sauber zu formatieren.
+%
+\usepackage[savemem]{listings}
+\lstloadlanguages{TeX}
+
+\usepackage{verbatim}
+
+%
+% ---------------------------------------------------------------------------
+%
+\lstset{language=C++,
+	basicstyle=\ttfamily\small,
+	basewidth=.52em,
+	tabsize=2,
+	xleftmargin=\leftmargin,
+	aboveskip=\bigskipamount,
+	belowskip=\smallskipamount,
+	float=h,
+	captionpos=b,
+	abovecaptionskip=\medskipamount,
+}
+%
+% ---------------------------------------------------------------------------
+%
+
+\usepackage{float}
+\newfloat{sourcecode}{tbp}{loc}[chapter]
+\floatname{sourcecode}{Quelltext}
+
+%
+% Neue Umgebungen
+% ---------------------------------------------------------------------------
+
+\newenvironment{ListChanges}%
+	{\begin{list}{$\diamondsuit$}{}}%
+	{\end{list}}
+\newenvironment{mv}{\addmargin[\leftmargin]{0em}\verbatim}{\endverbatim\endaddmargin}
+\newenvironment{ml}[1]
+	{\addmargin[\leftmargin]{0em}\labeling[\hspace\labelsep--]{#1}\setlength\itemsep{-.1em}}
+	{\endlabeling\endaddmargin}
+
+%
+% Index erzeugen
+%
+%\usepackage{scrindex}
+\makeindex
+
+\begin{document}
+\pagestyle{scrheadings}
+\automark[chapter]{section} 
+
+%
+% EOF
+%
+
+\newcommand\textt{\texttt}
+\newcommand\empf{\emph}
+\definecolor{grey}{rgb}{.6,.6,.6}
+\definecolor{rfc}{rgb}{0,0,0}%{.4,.4,.4}
+\newcommand\todo[1]{{\color{red}}#1}
+\newcommand\bitem[1]{\item\textbf{#1}\\}
+\newcommand\titem[1][]{\item[\texttt{#1}]}
+\renewcommand\subsubsectionautorefname\subsectionautorefname
