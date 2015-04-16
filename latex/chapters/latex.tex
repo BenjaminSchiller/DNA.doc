@@ -2,10 +2,10 @@
 This chapter will deal with the general LaTeX-output mechanisms in DNA and how to use them. All plots that may be generated throughout the output process are created by using gnuplot.
 
 \section{What can be exported?}
-In general it is possible to output all values that are being gathered during generation. This covers runtimes and statistics aswell as data contained in metrics, namely values, distributions and nodevaluelists. However, at the moment it is only possible to generate one document for exactly one series at a time.
+In general it is possible to output all values that are being gathered during generation. This covers runtimes and statistics aswell as data contained in metrics, namely values, distributions and nodevaluelists. This can be done in two different ways. Either export each series in one separate chapter each or export one combined chapter containing multiple series.
 
 \section{How to get started?}
-The LaTeX class dna.latex.Latex.java holds several public methods, which can be called to start the output process. If the plotting has been done beforehand the latex process might can be started immediately. If this is not the case, there are also methods which first plot the data and then generate a latex document. See the section \ref{sec:methods} for further details. Note: At the moment it is only possible to export aggregated data of a single series. 
+The LaTeX class \textit{dna.latex.Latex.java} holds several public methods, which can be called to start the output process. If the plotting has been done beforehand the latex process may be started immediately. If this is not the case, there are additional methods which first plot the data and then generate a latex document. See the section \ref{sec:methods} for further details.
 
 \section{LatexConfig}
 The LatexConfig class provides a way for the user to easily configure the output process. A TexConfig object can be instantiated, configured and then handed over to a latex-method. It holds several methods to customize the resulting document, for example set a timestamp window and stepsize for the data. Furthermore PlottingConfig objects can be handed over to customize the shown plots of data. See table \ref{tab:tex-methods} for more details about the TexConfig-API. More information about PlottingConfig objects may be found in the plotting manual.
@@ -22,8 +22,17 @@ The LatexConfig class provides a way for the user to easily configure the output
 	\hline
 	setDateFormat(String pattern) & See above.\\
 	\hline
+	setFontSize(int fontSize) & Sets the fontsize for the document\\
+	& in points. Default is 12pt.\\
+	\hline
 	setMapping( & Sets a map that maps timestamps.\\
 	HashMap $\langle$Long,Long$\rangle$ map) &\\
+	\hline
+	setMultipleTableMode( & Sets how the values will be ordered\\
+	TableMode tableMode) & in multiple series tables.\\
+	\hline
+	setMultipleSeriesTables(boolean flag) & Set to add multiple series values\\
+	& into the same table.\\
 	\hline
 	setOutputInterval(long from,& Sets an output interval. Will only\\
 	long to, long stepsize) & output batches who are in the interval.\\
@@ -118,8 +127,9 @@ PlotFlag objects are used to define what data will be plotted and added to the d
 \label{sec:methods}
 The following is a list of supported latex methods in the current build and a brief explanation.
 
-\textbf{creates the document at the destination directory.}\\
+\textbf{Creates the document at the destination directory.}\\
 - writeTex(SeriesData seriesData, String dstDir, String filename, TexConfig config, PlottingConfig pconfig) (Note: It is necessary to set the plot directory in the TexConfig)\\
+- writeTex(SeriesData[] seriesData, String dstDir, String filename, String[] plotDirs, TexConfig config, PlottingConfig pconfig)
 
 \textbf{Creates the document at the destination directory but only includes data within the timestamp window.}\\
 - writeTexFromTo(SeriesData seriesData, String dstDir, String filename, String plotDir, long from, long to, long stepsize, PlottingConfig pconfig)\\
@@ -128,10 +138,17 @@ The following is a list of supported latex methods in the current build and a br
 - writeTexAndPlot(SeriesData seriesData, String dstDir, String filename)\\
 - writeTexAndPlot(SeriesData seriesData, String dstDir, String filename, TexConfig config)\\
 - writeTexAndPlot(SeriesData seriesData, String dstDir, String filename, TexConfig config, PlottingConfig pconfig)\\
-\\
+- writeTexAndPlot(SeriesData[] seriesData, String dstDir, String filename, TexConfig config, PlottingConfig pconfig)\\
 
 \textbf{Plots data in the given timestamp window and then creates the document at the destination directory but only includes data within the window.}\\
 - writeTexAndPlotFromTo(SeriesData seriesData, String dstDir, String filename, long from, long to, long stepsize)\\
+
+\textbf{Creates a combined LaTeX-document from multiple series.}\\
+- writeTexCombined(SeriesData[] seriesData, String dstDir, String filename, String plotDir, TexConfig config, PlottingConfig pconfig)\\
+
+\textbf{Creates combined plots and a combined document.}\\
+- writeTexAndPlotCombined(SeriesData[] seriesData, String dstDir, String filename, TexConfig config, PlottingConfig pconfig)\\
+
 
 \section{Example}
 The following code snippet shows an example on how to use a TexConfig and PlottingConfig object in order to configure the latex process.
