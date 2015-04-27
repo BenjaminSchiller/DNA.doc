@@ -43,20 +43,25 @@ public static void main(String[] args) throws AggregationException,
 \label{code:example1}
 \end{figure}
 
+\section{Auto-generated extra-values}
+The DNA is able to compute additional extra values for distributions and nodevaluelists. This is enabled by default and can be finely configured in the \textit{settings.properties} configuration file. These include \textit{minimum}, \textit{maximum}, \textit{median}, \textit{average} and for certain distributions \textit{binsize} and \textit{denominator}. Consider the following example:\\
+
+The metric \textit{DegreeDistributionR} calculates the values \textit{degreeMin}, \textit{degreeMax} aswell as the distribution \textit{DegreeDistribution}. DNA will automatically generate the additional values \textit{DegreeDistribution\_ AVG}, \textit{DegreeDistribution\_ MAX}, \textit{DegreeDistribution\_ MED} and \textit{DegreeDistribution\_ MIN}. Note: Because the \textit{DegreeDistribution} is an int-distribution it is also possible to generate an extra value \textit{DegreeDistribution\_ DENOMINATOR}, however this is disabled by default.
+
 \section{Zip-Modes}
 The generation of series with lots of runs, batches and metrics can lead to a lot of single files on the filesystem. In order to reduce the amount of files aswell as the overall disk space allocation it is possible to enable zip-mode. Note that the use of zip-files leads to a higher cpu load which will result in increased runtimes. The zip-modes can either be enabled via the \textit{settings.properties} configuration file or during runtime with the config-key \textit{GENERATION\_ AS\_ ZIP}. Zips are disabled by default:
 \begin{lstlisting}
 			Config.overwrite("GENERATION_AS_ZIP", "none");
 \end{lstlisting}
 
-\subsection{Zipped batches}
+\subsection{Batches}
 In zipped-batch mode every batch will be written and read as a single zip-file. May be enabled via the following command:
 \begin{lstlisting}
 			Config.overwrite("GENERATION_AS_ZIP", "batches");
 \end{lstlisting}
 
-\subsection{Zipped runs}
-In zipped-run mode every run will be written and read as a single zip-file. Note that this greatly reduces the amount of files (one for each run and an additional for the aggregation) but also increases cpu load alot, because for each read and write operation the zip-file has to be accessed.
+\subsection{Runs}
+In zipped-run mode every run will be written and read as a single zip-file. Note that this greatly reduces the amount of files (one for each run and an additional for the aggregation) but also greatly increases cpu load, because the zip-file has to be accessed for each read and write operation.
 \begin{lstlisting}
 			Config.overwrite("GENERATION_AS_ZIP", "runs");
 \end{lstlisting}
