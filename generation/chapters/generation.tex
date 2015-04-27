@@ -34,9 +34,29 @@ public static void main(String[] args) throws AggregationException,
 
 	// create series and generate it
 	Series s = new Series(gg1, bg1, m1, seriesDir, "series");
-	SeriesData sd = s.generate(1, 100);
+	
+	// generate 2 runs with 100 batches each
+	SeriesData sd = s.generate(2, 100);
 }
 \end{lstlisting}
 \caption{Simple generation example.}
 \label{code:example1}
 \end{figure}
+
+\section{Zip-Modes}
+The generation of series with lots of runs, batches and metrics can lead to a lot of single files on the filesystem. In order to reduce the amount of files aswell as the overall disk space allocation it is possible to enable zip-mode. Note that the use of zip-files leads to a higher cpu load which will result in increased runtimes. The zip-modes can either be enabled via the \textit{settings.properties} configuration file or during runtime with the config-key \textit{GENERATION\_ AS\_ ZIP}. Zips are disabled by default:
+\begin{lstlisting}
+			Config.overwrite("GENERATION_AS_ZIP", "none");
+\end{lstlisting}
+
+\subsection{Zipped batches}
+In zipped-batch mode every batch will be written and read as a single zip-file. May be enabled via the following command:
+\begin{lstlisting}
+			Config.overwrite("GENERATION_AS_ZIP", "batches");
+\end{lstlisting}
+
+\subsection{Zipped runs}
+In zipped-run mode every run will be written and read as a single zip-file. Note that this greatly reduces the amount of files (one for each run and an additional for the aggregation) but also increases cpu load alot, because for each read and write operation the zip-file has to be accessed.
+\begin{lstlisting}
+			Config.overwrite("GENERATION_AS_ZIP", "runs");
+\end{lstlisting}
