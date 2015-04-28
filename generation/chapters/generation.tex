@@ -23,7 +23,7 @@ The example in \ref{code:example1} shows how one could generate a random, undire
 public static void main(String[] args) throws AggregationException,
 		IOException, MetricNotApplicableException,
 		InterruptedException {
-	String seriesDir = dir + "series/";
+	String seriesDir = "data/series/";
 
 	// initialization, 100 nodes and 300 edges
 	GraphGenerator gg1 = new RandomGraph(GDS.undirected, 100, 300);
