@@ -1,0 +1,42 @@
+\chapter{Configuration}
+The configuration approach used in DNA is designed to be flexible and to offer the user additional options rather than limiting them. Configuration files are traditionally stored in the \textit{config/} directory and named by their respective category and end with the suffix \textit{.properties}. All config values set in the configuration files represent default values and changing them will have impact on the DNA workflow. However the configuration is very dynamic and the user may change configurated values during runtime via:
+\begin{lstlisting}
+			Config.overwrite(<config-key>, <property>);
+\end{lstlisting}
+Note that this command only overwrites the keys temporarily and has no effect on the actual configuration files. It is also possible to read configuration values from the properties-files. For this purpose the \textit{dna.util.Config.java} class offers several get-methods:
+\begin{lstlisting}
+			Config.get(<config-key>);	//returns string
+			Config.getBoolean(<config-key>);	// returns boolean
+			Config.getDouble(<config-key>);	// returns double
+			...
+\end{lstlisting}
+Be aware that if a certain \textless config-key\textgreater  is not present when a get-method is called, it will return \textit{null}.
+
+\section{Zip-Modes}
+The generation of series with lots of runs, batches and metrics can lead to a lot of single files on the filesystem. In order to reduce the amount of files aswell as the overall disk space allocation it is possible to enable zip-mode. Note that the use of zip-files leads to a higher cpu load which will result in increased runtimes. The zip-modes can either be enabled via the \textit{settings.properties} configuration file or during runtime with the config-key \textit{GENERATION\textunderscore AS\textunderscore ZIP}. Zips are disabled by default:
+\begin{lstlisting}
+			Config.overwrite("GENERATION_AS_ZIP", "none");
+\end{lstlisting}
+
+\subsection{Batches}
+In zipped-batch mode every batch will be written and read as a single zip-file. May be enabled via the following command:
+\begin{lstlisting}
+			Config.overwrite("GENERATION_AS_ZIP", "batches");
+\end{lstlisting}
+
+\subsection{Runs}
+In zipped-run mode every run will be written and read as a single zip-file. Note that this greatly reduces the amount of files (one for each run and an additional for the aggregation) but also greatly increases cpu load, because the zip-file has to be accessed for each read and write operation.
+\begin{lstlisting}
+			Config.overwrite("GENERATION_AS_ZIP", "runs");
+\end{lstlisting}
+
+\section{Visualization and plotting}
+The DNA plotting and visualization modules each have more complex configuration structures. For details check the respective instruction manuals. However, in order to successfully use plotting it is neccessary to configure the path to gnuplots binary files correctly. Per default it is set to the linux default path:
+\begin{lstlisting}
+			GNUPLOT_PATH = /usr/bin/gnuplot
+\end{lstlisting}
+If you are running on windows systems the configuration could look like this (default gnuplot installation directiry):
+\begin{lstlisting}
+			Config.overwrite("GNUPLOT_PATH",
+				"C://Program Files (x86)//gnuplot//bin//gnuplot.exe");	
+\end{lstlisting}
