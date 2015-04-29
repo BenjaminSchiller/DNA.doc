@@ -1,8 +1,8 @@
 \chapter{Evaluation}
 In order to evaluate the data and reach certain conclusions from the results it is neccessary to take a view at the data directly or atleast to visualize them in a plot or graph. For this purpose DNA offers sophisticated plotting mechanisms, automatic LaTeX output, which includes data tables and plots, and a graphical user interface namely the DNA-Visualizer.
 
-\subsection{Aggregation}
-The aggregation process is enabled by default and takes place at the end of the generation process. During aggregation the data from all runs will be aggregated and stored in a separate aggregation directory \textit{aggr/} next to the run directories. The aggregations filesystem structure is analogous to the structure of a single run. The only difference is the extended data representation. All values contain aggregated \textit{average}, \textit{minimum}, \textit{maximum}, \textit{median}, \textit{variance}, \textit{variance\textunderscore low}, \textit{variance\textunderscore up}, \textit{confidence\textunderscore low} and \textit{confidence\textunderscore up} in this order. A simple example follows:
+\section{Aggregation}
+The aggregation process is enabled by default and takes place at the end of the generation process. During aggregation the data from all runs will be aggregated and stored in a separate aggregation directory \textit{../aggr/} next to the run directories. The aggregations filesystem structure is analogous to the structure of a single run. The only difference is the extended data representation. All values contain the aggregated \textit{average}, \textit{minimum}, \textit{maximum}, \textit{median}, \textit{variance}, \textit{variance\textunderscore low}, \textit{variance\textunderscore up}, \textit{confidence\textunderscore low} and \textit{confidence\textunderscore up} in this order. A simple example follows:
 
 A series is generated with 2 runs and 100 batches. The metric-value \textit{degreeMax} has the its values shown in table \ref{tab:degreemax-data} and its aggregated data in table \ref{tab:degreemax-aggr} respectively.
 
@@ -43,13 +43,125 @@ A series is generated with 2 runs and 100 batches. The metric-value \textit{degr
 \label{tab:degreemax-aggr}
 \end{table}
 
+\subsection{Configuration}
+The only thing to be configured is how aggregation will handle missing values. For example there is a series with 3 runs. Run 1 has 34 batches, run 2 has 33 batches and run 3 only has 32 batches. There are two different ways to handle this.
 
+\subsubsection{Ignore missing values (/n-mode)}
+This is the default mode. The aggregation will completely ignore the missing values:
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|l|l||l|}\hline
+	\textbf{degreeMax} & & & &\\
+	\hline
+	\textbf{batch} & \textbf{run.1} & \textbf{run.2} & \textbf{run.3} & \textbf{average}\\
+	\hline
+	32 & 10 & 12 & 14 & \textbf{12}\\
+	\hline
+	33 & 11 & - & 17 & \textbf{14}\\
+	\hline
+	34 & 12 & - & - & \textbf{12}\\
+	\hline
+\end{tabular}
+\caption{Aggregation for runs with different amount of batches in /n-mode.}
+\label{tab:nmode}
+\end{table}
 
-\subsection{Plotting}
-TODO: Plotting
+\subsubsection{Assume missing values (/n+1-mode)}
+The second way to handle missing values is to assume their values to be zero. This mode can be enabled on demand with:
+\begin{lstlisting}
+			Config.overwrite("AGGREGHATION_IGNORE_MISSING_VALUES", "false");
+\end{lstlisting}
+The following table shows the differences to /n-mode.
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|l|l||l|}\hline
+	\textbf{degreeMax} & & & &\\
+	\hline
+	\textbf{batch} & \textbf{run.1} & \textbf{run.2} & \textbf{run.3} & \textbf{average}\\
+	\hline
+	32 & 10 & 12 & 14 & \textbf{12}\\
+	\hline
+	33 & 11 & - & 17 & \textbf{9.33}\\
+	\hline
+	34 & 12 & - & - & \textbf{4}\\
+	\hline
+\end{tabular}
+\caption{Aggregation for runs with different amount of batches in /n+1-mode.}
+\label{tab:nmode}
+\end{table}
 
-\subsection{LaTeX}
-TODO: LaTeX
+\section{Plotting}
+The plotting mechanisms included in DNA are complex and therefore only a basic example will be shown here. For more details feel free to check the plotting instruction manual. The class \textit{dna.plot.Plotting.java} offers several public methods for plotting. They usually take an array of \textit{SeriesData} objects and a destination directory as input. When the array holds multiple \textit{SeriesData}'s they will all be compared and featured in the same plots. For each plot DNA will generate a gnuplot script in the destination directory and use this to create the respective plot. Code \ref{code:plot-example} shows how to generate and plot two series and \ref{fig:plot} shows one of the resulting plots.
+\begin{figure} [h]
+\begin{lstlisting}
+public static void main(String[] args) throws AggregationException,
+		IOException, MetricNotApplicableException,
+		InterruptedException {
+	String dir = "data/scenario.1/";
+	
+	// init and generation
+	GraphGenerator gg1 = new RandomGraph(GDS.undirected, 100, 300);
+	BatchGenerator bg1 = new RandomBatch(5, 0, 20, 15);
+	
+	GraphGenerator gg2 = new RandomGraph(GDS.undirected, 200, 400);
+	BatchGenerator bg2 = new RandomBatch(10, 0, 25, 30);
 
-\subsection{Visualization}
-TODO: Visualization
+	Metric[] m = new Metric[] { new DegreeDistributionR(),
+			new UndirectedClusteringCoefficientU() };
+
+	Series s1 = new Series(gg1, bg1, m, dir + "s1/", "s1");
+	Series s2 = new Series(gg2, bg2, m, dir + "s2/", "s2");
+	
+	SeriesData sd1 = s1.generate(2, 100);
+	SeriesData sd2 = s2.generate(2, 100);
+
+	// plotting
+	Plotting.plot(new SeriesData[] {sd1, sd2}, dir + "plots/");
+}
+\end{lstlisting}
+\caption{Generating two series with the same metrics and plotting them.}
+\label{code:plot-example}
+\end{figure}
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.8] {images/plot}
+\caption{Example plot from code snippet \ref{code:plot-example}.}
+\label{fig:plot}
+\end{figure}
+
+\section{LaTeX}
+The \textit{dna.latex.Latex.java} class holds several methods to generate complete latex-documents based on input series. Since the latex process itself is complex and can be configured in several ways it is recommended to check out the latex instruction manual for mor details. The code \ref{code:tex-example} shows a simple example on how to generate a series and then create a latex document including plots.
+\begin{figure} [h]
+\begin{lstlisting}
+public static void main(String[] args) throws AggregationException,
+		IOException, MetricNotApplicableException,
+		InterruptedException {
+	String dir = "data/scenario.1/";
+	
+	// init and generation
+	GraphGenerator gg1 = new RandomGraph(GDS.undirected, 100, 300);
+	BatchGenerator bg1 = new RandomBatch(5, 0, 20, 15);
+	Metric[] m = new Metric[] { new DegreeDistributionR(),
+			new UndirectedClusteringCoefficientU() };
+
+	Series s1 = new Series(gg1, bg1, m, dir + "s1/", "s1");
+	SeriesData sd1 = s1.generate(2, 100);
+
+	// plot & generate latex document
+	Latex.writeTexAndPlot(sd1, dir, "preamble.tex");
+}
+\end{lstlisting}
+\caption{Generating series \textit{s1} and create a latex document including plots.}
+\label{code:tex-example}
+\end{figure}
+
+\section{Visualization}
+The DNA visualizer is a graphical user interface designed to illustrate and visualize data from single runs. A visualizer can be opened by calling the \textit{main()}-method from the \textit{dna.visualization.MainDisplay.java} class. The default configuration already allows to view all data contained in the desired run. For more instructions on how to use the visualizer and especially how to configure it check out the visualization instruction manual. See figure \ref{fig:vis} for an example.
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.5] {images/vis-ex}
+\caption{Default configured DNA visualizer.}
+\label{fig:vis}
+\end{figure}
