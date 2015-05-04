@@ -91,7 +91,7 @@ The following table shows the differences to /n-mode.
 \end{table}
 
 \section{Plotting}
-The plotting mechanisms included in DNA are complex and therefore only a basic example will be shown here. For more details feel free to check the plotting instruction manual. The class \textit{dna.plot.Plotting.java} offers several public methods for plotting. They usually take an array of \textit{SeriesData} objects and a destination directory as input. When the array holds multiple \textit{SeriesData}'s they will all be compared and featured in the same plots. For each plot DNA will generate a gnuplot script in the destination directory and use this to create the respective plot. Code \ref{code:plot-example} shows how to generate and plot two series and \ref{fig:plot} shows one of the resulting plots.
+The plotting mechanisms included in DNA are complex and therefore only a basic example will be shown here. For more details feel free to check the plotting instruction manual. The class \textit{dna.plot.Plotting.java} offers several public methods for plotting. They usually take an array of \textit{SeriesData} objects and a destination directory as input. When the array holds multiple \textit{SeriesData}'s they will all be compared and featured in the same plots. For each plot DNA will generate a gnuplot script in the destination directory and use this to create the respective plot. Code \ref{code:plot-example} shows how to generate and plot two series and the figures \ref{fig:plot_dist}, \ref{fig:plot_dist_cdf}, \ref{fig:plot_dist_avg}, \ref{fig:plot_nvl} show some of the resulting plots.
 \begin{figure} [h]
 \begin{lstlisting}
 public static void main(String[] args) throws AggregationException,
@@ -112,8 +112,8 @@ public static void main(String[] args) throws AggregationException,
 	Series s1 = new Series(gg1, bg1, m, dir + "s1/", "s1");
 	Series s2 = new Series(gg2, bg2, m, dir + "s2/", "s2");
 	
-	SeriesData sd1 = s1.generate(2, 100);
-	SeriesData sd2 = s2.generate(2, 100);
+	SeriesData sd1 = s1.generate(2, 10);
+	SeriesData sd2 = s2.generate(2, 10);
 
 	// plotting
 	Plotting.plot(new SeriesData[] {sd1, sd2}, dir + "plots/");
@@ -125,9 +125,30 @@ public static void main(String[] args) throws AggregationException,
 
 \begin{figure} [h]
 \centering
-\includegraphics [scale=0.8] {images/plot}
-\caption{Example plot from code snippet \ref{code:plot-example}.}
-\label{fig:plot}
+\includegraphics [scale=0.8] {images/plot_dist}
+\caption{DegreeDistribution plot from the example code snippet \ref{code:plot-example}.}
+\label{fig:plot_dist}
+\end{figure}
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.8] {images/plot_dist_cdf}
+\caption{CDF plot of the DegreeDistribution from the example code snippet \ref{code:plot-example}.}
+\label{fig:plot_dist_cdf}
+\end{figure}
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.8] {images/plot_dist_avg}
+\caption{Plot of the auto-generated average value for the DegreeDistribution from the example code snippet \ref{code:plot-example}.}
+\label{fig:plot_dist_avg}
+\end{figure}
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.8] {images/plot_nvl}
+\caption{Plot of the NodeValueList localCC from the example code snippet \ref{code:plot-example}.}
+\label{fig:plot_nvl}
 \end{figure}
 
 \section{LaTeX}
