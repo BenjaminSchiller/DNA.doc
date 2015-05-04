@@ -44,10 +44,10 @@ A series is generated with 2 runs and 100 batches. The metric-value \textit{degr
 \end{table}
 
 \subsection{Configuration}
-The only thing to be configured is how aggregation will handle missing values. For example there is a series with 3 runs. Run 1 has 34 batches, run 2 has 33 batches and run 3 only has 32 batches. There are two different ways to handle this.
+The dynamic nature of generation may cause different runs of the same series to contain different amounts of batches. This leads to the question how aggregation may handle unavailable values due to differing amounts of batches. Essentially there are two ways to approach this problem, either ignore the absent values at all or assume a specific value for them. The following sections show how one may change which approach will be used and how this affects the results using a simple example of 3 runs each with different ammount of batches.
 
-\subsubsection{Ignore missing values (/n-mode)}
-This is the default mode. The aggregation will completely ignore the missing values:
+\subsubsection{Ignore unavailable values (/n-mode)}
+This is the default mode. The aggregation will completely ignore any unavailable values:
 \begin{table}[h]
 \centering
 \begin{tabular}[h]{|l|l|l|l||l|}\hline
@@ -66,8 +66,8 @@ This is the default mode. The aggregation will completely ignore the missing val
 \label{tab:nmode}
 \end{table}
 
-\subsubsection{Assume missing values (/n+1-mode)}
-The second way to handle missing values is to assume their values to be zero. This mode can be enabled on demand with:
+\subsubsection{Assume unavailable values (/n+1-mode)}
+The second way to handle absent values is to assume their values to be zero. This mode can be enabled on demand with:
 \begin{lstlisting}
 			Config.overwrite("AGGREGHATION_IGNORE_MISSING_VALUES", "false");
 \end{lstlisting}

@@ -13,20 +13,26 @@ Note that this command only overwrites the keys temporarily and has no effect on
 Be aware that if a certain \textless config-key\textgreater  is not present when a get-method is called, it will return \textit{null}.
 
 \section{Zip-Modes}
-The generation of series with lots of runs, batches and metrics can lead to a lot of single files on the filesystem. In order to reduce the amount of files aswell as the overall disk space allocation it is possible to enable zip-mode. Note that the use of zip-files leads to a higher cpu load which will result in increased runtimes. The zip-modes can either be enabled via the \textit{settings.properties} configuration file or during runtime with the config-key \textit{GENERATION\textunderscore AS\textunderscore ZIP}. Zips are disabled by default:
+The generation of series with lots of runs, batches and metrics can lead to a vast amount of single files on the filesystem. In order to reduce the amount of files aswell as the overall disk space allocation it is possible to enable zip-mode. Note that the use of zip-files leads to a higher cpu load which will result in increased runtimes. The zip-modes can either be enabled via the \textit{settings.properties} configuration file with the config-key \textit{GENERATION\textunderscore AS\textunderscore ZIP} or during runtime with the shown shortcut methods. Note that internally the shortcuts do nothing but setting the config-key to the corresponding value. Zips are disabled by default:
 \begin{lstlisting}
+			Config.zipNone();
+	or
 			Config.overwrite("GENERATION_AS_ZIP", "none");
 \end{lstlisting}
 
 \subsection{Batches}
 In zipped-batch mode every batch will be written and read as a single zip-file. May be enabled via the following command:
 \begin{lstlisting}
+			Config.zipBatches()
+	or
 			Config.overwrite("GENERATION_AS_ZIP", "batches");
 \end{lstlisting}
 
 \subsection{Runs}
 In zipped-run mode every run will be written and read as a single zip-file. Note that this greatly reduces the amount of files (one for each run and an additional for the aggregation) but also greatly increases cpu load, because the zip-file has to be accessed for each read and write operation.
 \begin{lstlisting}
+			Config.zipRuns()
+	or
 			Config.overwrite("GENERATION_AS_ZIP", "runs");
 \end{lstlisting}
 

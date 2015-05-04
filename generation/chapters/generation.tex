@@ -2,6 +2,14 @@
 This chapter will deal with the general series-generation mechanisms in DNA and how to use them. Different approaches and configurations will be shown on examples to give a quick and easy insight into DNA usage.
 
 \section{General}
+A series in DNA is composed of several objects:
+
+\begin{center}
+\begin{math}
+S = (GraphGenerator, BatchGenerator, Metric[], SeriesDir, SeriesName)
+\end{math}
+\end{center}
+
 The generation process uses a GraphGenerator to generate the graph and a BatchGenerator to
 compile graph changes into batches. DNA offers a variety of different Graph- and BatchGenerators for different graphs and purposes. Due to the nature of dynamic graphs, metrics can either calculate their values based on initial information and additional updates or do a full recompute after each update. During generation DNA will store statistics, runtimes and computed data in series objects. A series contains one or more runs, each of which represent one separate simulation. A run is divided into several batches, which contain statistics, runtimes and metric datas, see \ref{fig:filesystem-struct}. The \textit{aggr}-directory contains aggregated data of all runs contained in the specific series. For more details on the DNA architecture and theoretical background check the DNA paper. TODO: Citation.
 
@@ -49,4 +57,4 @@ public static void main(String[] args) throws AggregationException,
 \section{Auto-generated extra-values}
 The DNA is able to compute additional extra values for distributions and nodevaluelists. This is enabled by default and can be finely configured in the \textit{settings.properties} configuration file. These include \textit{minimum}, \textit{maximum}, \textit{median}, \textit{average} and for certain distributions \textit{binsize} and \textit{denominator}. Consider the following example:\\
 
-The metric \textit{DegreeDistributionR} calculates the values \textit{degreeMin}, \textit{degreeMax} aswell as the distribution \textit{DegreeDistribution}. In each batch DNA will automatically compute the additional values \textit{DegreeDistribution\textunderscore AVG}, \textit{DegreeDistribution\textunderscore MAX}, \textit{DegreeDistribution\textunderscore MED} and \textit{DegreeDistribution\textunderscore MIN} based on the distribution. Note: Because the \textit{DegreeDistribution} is an int-distribution it is also possible to generate an extra value \textit{DegreeDistribution\textunderscore DENOMINATOR}, however this is disabled by default and may be enabled on demand.
+The metric \textit{DegreeDistributionR} calculates a distribution \textit{DegreeDistribution}. In each batch DNA will automatically compute the additional values \textit{DegreeDistribution\textunderscore AVG}, \textit{DegreeDistribution\textunderscore MAX}, \textit{DegreeDistribution\textunderscore MED} and \textit{DegreeDistribution\textunderscore MIN} based on the distribution. Note: Because the \textit{DegreeDistribution} is an int-distribution it is also possible to generate an extra value \textit{DegreeDistribution\textunderscore DENOMINATOR}, however this is disabled by default and may be enabled on demand.
