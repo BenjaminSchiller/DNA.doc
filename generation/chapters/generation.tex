@@ -11,21 +11,21 @@ S = (GraphGenerator, BatchGenerator, Metric[], SeriesDir, SeriesName)
 \end{center}
 
 The generation process uses a GraphGenerator to generate the graph and a BatchGenerator to
-compile graph changes into batches. DNA offers a variety of different Graph- and BatchGenerators for different graphs and purposes. Due to the nature of dynamic graphs, metrics can either calculate their values based on initial information and additional updates or do a full recompute after each update. During generation DNA will store statistics, runtimes and computed data in series objects. A series contains one or more runs, each of which represent one separate simulation. A run is divided into several batches, which contain statistics, runtimes and metric datas, see \ref{fig:filesystem-struct}. The \textit{aggr}-directory contains aggregated data of all runs contained in the specific series. For more details on the DNA architecture and theoretical background check the DNA paper. TODO: Citation.
+compile graph changes into batches. DNA offers a variety of different Graph- and BatchGenerators for different graphs and purposes. Due to the nature of dynamic graphs, metrics can either calculate their values based on initial information and additional updates or do a full recompute after each update. During generation DNA will store statistics, runtimes and computed data in series objects. A series contains one or more runs, each of which represent one separate simulation. A run is divided into several batches, which contain statistics, runtimes and metric datas, see \ref{fig:filesystem-struct}. The \textit{aggr}-directory contains aggregated data of all runs contained in the specific series. For more details on the DNA architecture and theoretical background check the DNA paper \cite{dna-paper13}.
 
 \begin{figure} [h]
 \centering
-\includegraphics [scale=1.2] {images/fs-struct}
-\caption{Filesystem structure for storing the results of a series.}
-\label{fig:filesystem-struct}
+\includegraphics [scale=1] {images/fs-struct-gen}
+\caption{General filesystem structure for storing the results of a series.}
+\label{fig:fs-struct-gen}
 \end{figure}
+
 
 \section{Getting started}
 The usual workflow is pretty simple. First one initializes a GraphGenerator, BatchGenerator and an array of metrics. Then a Series object is initialized with these inputs. The second step is the generation itself: Each Series-object has several generation-methods for different purposes. 
 
 \subsection{First approach}
-The example in \ref{code:example1} shows how one could generate a random, undirected graph with initially 100 nodes and 300 edges. With each batch 5 nodes and 20 edges are randomly being added while also 15 edges are being removed. The metrics \textit{DegreeDistributionR} (recomputed) and \textit{UndirectedClusteringCoefficientU} (updated) are chosen to be computed. 
-
+The example in \ref{code:example1} shows how one could generate a random, undirected graph with initially 100 nodes and 300 edges. With each batch 5 nodes and 20 edges are being randomly added while also 15 edges are being removed. The metrics \textit{DegreeDistributionR} (recomputed) and \textit{UndirectedClusteringCoefficientU} (updated) are chosen to be computed. The resulting filesystem structure can be seen in figure \ref{fig:fs-struct-val}.
 \begin{figure} [h]
 \begin{lstlisting}
 public static void main(String[] args) throws AggregationException,
@@ -52,6 +52,12 @@ public static void main(String[] args) throws AggregationException,
 \end{lstlisting}
 \caption{Simple generation example.}
 \label{code:example1}
+\end{figure}
+\begin{figure} [h]
+\centering
+\includegraphics [scale=1] {images/fs-struct-val}
+\caption{Filesystem structure for example \ref{code:example1}.}
+\label{fig:fs-struct-val}
 \end{figure}
 
 \section{Auto-generated extra-values}
