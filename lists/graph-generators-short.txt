@@ -1,0 +1,5 @@
+Canonical: CliqueGraph, RingGraph
+Evolving Networks: BarabasiAlbertGraph, PositiveFeedbackPreferenceGraph
+Random: RandomGraph
+Projects: GooglePlus, Traffic, Zalando
+Util: BatchBasedGraph, EmptyGraph, ReadableDirGraph, ReadableEdgeListFileGraph, ReadableFileGraph

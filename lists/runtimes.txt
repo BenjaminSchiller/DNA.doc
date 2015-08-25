@@ -1,0 +1,6 @@
+>>> RUNTIMES
+
+total - sum 
+graphGeneration, batchGeneration
+metrics, graphUpdate
+profiler, hotSwap

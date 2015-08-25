@@ -1,0 +1,69 @@
+>>> evolvingNetworks
+BarabasiAlbertBatch
+PositiveFeedbackPreferenceBatch
+RandomGrowth
+RandomScalingBatch
+
+>>> random
+GrowingRandomBatch
+GrowingRandomEdgeExchange
+RandomBatch
+RandomEdgeAdditions
+RandomEdgeExchange
+RandomEdgeRemovals
+RandomEdgeWeightChanges
+RandomNodeAdditions
+RandomNodeRemovals
+RandomNodeWeightChanges
+RandomWeightChanges
+
+>>> sampling
+BFS
+DFS
+DFS_Jump
+DFS_random
+DFS_random_Jump
+ForestFire
+ForestFireNR
+FrontierSampling
+GreedyOracle
+MaximumObservedDegree
+RandomWalk
+RandomWalkNR
+RandomWalkNR_Jump
+RespondentDrivenSampling
+SamplingAlgorithm
+SnowballSampling
+UniformSampling
+
+>>> util
+BatchCombinator
+BatchRepetition
+BatchRoundRobin
+BatchWeights
+EmptyBatch
+LegacyReadableDirBatchGenerator
+LegacyReadableFilesBatchGenerator
+ReadableDirBatchGenerator
+ReadableFilesBatchGenerator
+Timestamped
+
+>>> weights
+NodeWeightContractionAndExpansion
+
+>>> zalando
+CustomersAbsoluteBatchGenerator
+CustomersActionsBatchGenerator
+CustomersBatchGenerator
+CustomersBrandsBatchGenerator
+CustomersCategory4BatchGenerator
+CustomersChronologyBatchGenerator
+CustomersProductsBatchGenerator
+ProductsAbsoluteBatchGenerator
+ProductsActionsBatchGenerator
+ProductsActionsChronologyBatchGenerator
+ProductsBatchGenerator
+SessionsCategory4BatchGenerator
+ZalandoBatchGenerator
+ZalandoChronologyBatchGenerator
+ZalandoEqualityBatchGenerator

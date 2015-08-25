@@ -1,0 +1,6 @@
+Evolving Networks: BarabasiAlbertBatch, PositiveFeedbackPreferenceBatch, RandomGrowth, RandomScalingBatch
+Random: GrowingRandomBatch, GrowingRandomEdgeExchange, RandomBatch, RandomEdgeAdditions, RandomEdgeExchange, RandomEdgeRemovals, RandomEdgeWeightChanges, RandomNodeAdditions, RandomNodeRemovals, RandomNodeWeightChanges, RandomWeightChanges
+Sampling:  BFS, DFS, DFS_Jump, DFS_random, DFS_random_Jump, ForestFire, ForestFireNR, FrontierSampling, GreedyOracle, MaximumObservedDegree, RandomWalk, RandomWalkNR, RandomWalkNR_Jump, RespondentDrivenSampling, SnowballSampling, UniformSampling
+Util: BatchCombinator, BatchRepetition, BatchRoundRobin, BatchWeights, EmptyBatch, LegacyReadableDirBatchGenerator, LegacyReadableFilesBatchGenerator, ReadableDirBatchGenerator, ReadableFilesBatchGenerator, Timestamped
+Weights: NodeWeightContractionAndExpansion
+Projects: GooglePlus, Traffic, Zalando

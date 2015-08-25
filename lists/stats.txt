@@ -1,0 +1,10 @@
+>>> STATS
+
+randomSeed, memory
+nodes, edges
+nodesToAdd, addedNodes, deletedNodeAdditions
+nodesToRemove, removedNodes, deletedNodeRemovals
+nodeWeightsToUpdate, updatedNodeWeights, deletedNodeWeightUpdates
+edgesToAdd, addedEdges, deletedEdgeAdditions
+edgesToRemove, removedEdges, deletedEdgeRemovals
+edgeWeightsToUpdate, updatedEdgeWeights, deletedEdgeWeightUpdates

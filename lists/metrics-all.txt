@@ -1,0 +1,104 @@
+>>> assortativity
+Assortativity
+AssortativityR
+AssortativityU
+
+>>> centrality
+BetweennessCentrality
+BetweennessCentralityR
+BetweennessCentralityU
+
+>>> clustering
+ClusteringCoefficient
+DirectedClusteringCoefficient
+DirectedClusteringCoefficientR
+DirectedClusteringCoefficientU
+UndirectedClusteringCoefficient
+UndirectedClusteringCoefficientB
+UndirectedClusteringCoefficientR
+UndirectedClusteringCoefficientU
+
+>>> connectivity
+StrongConnectivity
+StrongConnectivityR
+StrongConnectivityU
+WeakConnectivity
+WeakConnectivityB
+WeakConnectivityR
+WeakConnectivityU
+
+>>> degree
+DegreeDistribution
+DegreeDistributionR
+DegreeDistributionU
+
+>>> motifs
+DirectedMotifs
+DirectedMotifsR
+DirectedMotifsU
+DirectedMotifsURuleBased
+UndirectedMotifs
+UndirectedMotifsR
+UndirectedMotifsU
+UndirectedMotifsURuleBased
+
+>>> paths
+AllPairsShortestPaths
+IntWeightedAllPairsShortestPaths
+IntWeightedAllPairsShortestPathsR
+IntWeightedAllPairsShortestPathsU
+UnweightedAllPairsShortestPaths
+UnweightedAllPairsShortestPathsR
+UnweightedAllPairsShortestPathsU
+
+>>> richClub
+RichClubConnectivityByDegree
+RichClubConnectivityByDegreeR
+RichClubConnectivityByDegreeU
+
+>>> sampling
+Extent
+ExtentR
+SamplingModularity
+SamplingModularityB
+SamplingModularityR
+
+>>> similarityMeasures
+Dice
+DiceR
+DiceU
+Jaccard
+JaccardR
+JaccardU
+Matching
+MatchingR
+MatchingU
+Overlap
+OverlapR
+OverlapU
+
+>>> weights
+EdgeWeights
+EdgeWeightsR
+EdgeWeightsU
+NodeWeights
+NodeWeightsR
+NodeWeightsU
+RootMeanSquareDeviation
+RootMeanSquareDeviationB
+RootMeanSquareDeviationR
+RootMeanSquareFluctuation
+RootMeanSquareFluctuationR
+
+>>> workload
+AddSuccess
+ContainsFailure
+ContainsSuccess
+GetFailure
+GetSuccess
+Iterate
+Operation
+RandomElement
+RandomElementWorkload
+Workload
+WorkloadMetric

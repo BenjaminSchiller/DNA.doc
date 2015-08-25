@@ -1,0 +1,52 @@
+>>> canonical
+CliqueGraph
+RingGraph
+
+>>> evolvingNetworks
+BarabasiAlbertGraph
+PositiveFeedbackPreferenceGraph
+
+>>> google
+CopyOfOnlyCrawledParser
+EveryNodeParser
+GoogleBatchReader
+GoogleGraphReader
+GraphNodeAdditionType
+GraphNodeDeletionType
+InternalMappingReader
+MappingDto
+MappingReader
+MappingWriter
+OnlyCrawledParser
+
+>>> random
+IRandomGenerator
+RandomGraph
+
+>>> util
+BatchBasedGraph
+EmptyGraph
+ReadableDirGraph
+ReadableEdgeListFileGraph
+ReadableFileGraph
+
+>>> zalando
+
+CustomersActionsGraphGenerator
+CustomersChronologyGraphGenerator
+CustomersGraphGenerator
+CustomersProductsGraphGenerator
+EdgeValuesForNodes
+Event
+EventColumn
+EventFilter
+EventMappings
+EventReader
+HashSetMap
+Mapping
+ProductsActionsChronologyGraphGenerator
+ProductsActionsGraphGenerator
+ProductsGraphGenerator
+ZalandoChronologyGraphGenerator
+ZalandoEqualityGraphGenerator
+ZalandoGraphGenerator

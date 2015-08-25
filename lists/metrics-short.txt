@@ -1,0 +1,47 @@
+>>> assortativity
+Assortativity (R/U)
+
+>>> centrality
+BetweennessCentrality (R/U)
+
+>>> clustering
+DirectedClusteringCoefficient (R/U)
+UndirectedClusteringCoefficient (R/U/B)
+
+>>> connectivity
+StrongConnectivity (R/U)
+WeakConnectivity (R/U/B)
+
+>>> degree
+DegreeDistribution (R/U)
+
+>>> motifs
+DirectedMotifs (R/U/URuleBased)
+UndirectedMotifs (R/U/URuleBased)
+
+>>> paths
+IntWeightedAllPairsShortestPaths (R/U)
+UnweightedAllPairsShortestPaths (R/U)
+
+>>> richClub
+RichClubConnectivityByDegree (R/U)
+
+>>> sampling
+Extent (R)
+SamplingModularity (R/B)
+
+>>> similarityMeasures
+Dice (R/U)
+Jaccard (R/U)
+Matching (R/U)
+Overlap (R/U)
+
+>>> weights
+EdgeWeights (R/U)
+NodeWeights (R/U)
+RootMeanSquareDeviation (R/B)
+RootMeanSquareFluctuation (R)
+
+>>> workload
+WorkloadMetric
+Workload, Operation (AddSuccess, ContainsFailure, ContainsSuccess, GetFailure, GetSuccess, Iterate, RandomElement, RandomElementWorkload)
