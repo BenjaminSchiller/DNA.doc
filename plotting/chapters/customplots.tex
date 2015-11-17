@@ -160,7 +160,7 @@ where “DegreeDistributionR“ is the domain. Runtimes and statistics can be ad
 \end{table}
 
 \section{Wildcards}
-The described way to define custom plots is very restricted in regards of dynamic use. In each plot the value‘s have to be explicitly defined. There are several cases where this might not be convenient. For example the user wants a plot, which shows the runtimes of all current metrics for arbitrary series‘. Wildcards * provide a sophisticated way to deal with such cases. The code in figure \ref{fig:36} creates a plot with the runtimes of all used metrics, in this case DiceDirectedR-out, DicreDirectedU-out and DegreeDistributionR, and additionally the total runtime. Note that wildcards can not be used to replace domains. Additionally only one wildcard might be used in the same value definition.
+The described way to define custom plots is very restricted in regards of dynamic use. In each plot the value‘s have to be explicitly defined. There are several cases where this might not be convenient. For example the user wants a plot, which shows the runtimes of all current metrics for arbitrary series‘. Wildcards * provide a sophisticated way to deal with such cases. The code in figure \ref{fig:36} creates a plot with the runtimes of all used metrics, in this case DiceDirectedR-out, DicreDirectedU-out and DegreeDistributionR, and additionally the total runtime. Additionally, wildcards may also be used to replace domains. Note that only one wildcard might be used in the same domain/value definition.
 
 \begin{figure} [h]
 \centering
