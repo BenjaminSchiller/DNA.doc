@@ -49,6 +49,18 @@ The PlottingConfig class provides a way for the user to easily configure the plo
 	setPlotType(PlotType t) & Sets what values of the data will be\\
 	& plotted. For example: average, minimum...\\
 	\hline
+	setTimestampMap(HashMap\textless Long, & Maps all given timestamps to other\\
+	Long\textgreater  timestampMap) & timestamps.\\
+	\hline
+	setValueSortMode( & Sets which mode will be used for sorting.\\
+	ValueSortMode valueSortMode & Possible values are: NONE,\\
+	& LIST\_ FIRST, LIST\_ LAST, ALPHABETICAL,\\
+	& ALPHABETICAL\_ LIST\_ FIRST,\\
+	& ALPHABETICAL\_ LIST\_ LAST.\\
+	\hline
+	setValueSortList(String[] & Sets a list of values that will be handled\\
+	valueSortList & special in the sorting process.\\
+	\hline
 \end{tabular}
 \caption{PlottingConfig API methods.}
 \label{tab:plot-methods}
