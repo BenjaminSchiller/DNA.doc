@@ -123,6 +123,47 @@ TODO
 \label{ss:captureConfig}
 TODO
 
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|l|}\hline
+	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
+	\hline
+	CaptureArea & Enum & Default area to be recorded.\\
+	& & Possible values: content, graph, full\\
+	\hline
+	VideoDir & String & Destination directory for captured videos.\\
+	\hline
+	VideoSuffix & String & Suffix of video files.\\
+	\hline
+	VideoFilename & String & Filename of captured video files. If set as\\
+	& & "null" names will be derived from the graph-\\
+	& & panel name and (real-time) timestamp.\\
+	\hline
+	VideoMaximumLength & Integer & Maximum length of videos in seconds.\\
+	\hline
+	VideoRecordFPS & Integer & Frames per second of the resultin video.\\
+	\hline
+	VideoAutoRecrod & Boolean & If set video recording will automatically\\
+	& & start upon initialization.\\
+	\hline
+	ScreenshotDir & String & Destination directory for screenshots.\\
+	\hline
+	ScreenshotFormat & String & Screenshot format (png, jpg...).\\
+	\hline
+	ScreenshotStabilityThreshold & Double & Stability threshold of the layouter when\\
+	& & taking screenshots waiting for stability.\\
+	\hline
+	ScreenshotStabilityTimeout & Long & Stability timeout for taking screenshots\\
+	& & waiting for stability in ms.\\
+	\hline
+	ScreenshotForegroundDelay & Long & Artificial delay when taking screenshots to\\
+	& & let the machine move the panel to foreground.\\
+	\hline
+\end{tabular}
+\caption{Configuration values of CaptureConfig.}
+\label{tab:captureConfigValues}
+\end{table}
+
 \section{Default-Configuration file}
 TODO
 
