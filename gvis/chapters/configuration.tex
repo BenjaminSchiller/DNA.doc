@@ -126,7 +126,7 @@ Since the graphstream library does not support three-dimensional coordinates, tw
 This projection mode uses a defined vanishing point and virtually \emph{shifts} all nodes towards the vanishing point. How far the nodes will be shifted depends on the respective $z$-coordinate. The further a point is away from the screen-plain ($z=0$) the further it will be shifted. The vanishing point coordinates, a scaling factor and logarithmic scaling can be configured in the ProjectionConfig. Note: If 3d-projection is enabled but vanishing point mode is disabled ortographic projection will be used instead.
 
 \subsubsection{Ortographic Projection}
-The ortographic projection uses a transformation matrix to project the three-dimensional nodes onto the two-dimensional screen-plain. The used matrix and a offset may be defined in the ProjectionConfig. Note: This this mode is only used if the vanishing point projection is disabled.
+The ortographic projection uses a transformation matrix to project the three-dimensional nodes onto the two-dimensional screen-plain, see \ref{math:orthographicProjection}. The used matrix and a offset may be defined in the ProjectionConfig. Note: This this mode is only used if the vanishing point projection is disabled.
 
 \begin{figure} [h]
 \[
