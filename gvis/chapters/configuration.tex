@@ -120,7 +120,52 @@ The graph visualization allows to define so called \emph{GraphStyleRules} to mod
 
 \subsection{ProjectionConfig}
 \label{ss:projectionConfig}
-TODO
+Since the graphstream library does not support three-dimensional coordinates, two simple projection mechanisms have been implemented to simulate 3D behaviour. In this mode the node weights are assumed as 3D coordinates. For all configurable values see \ref{tab:projectionConfigValues}.
+
+\subsubsection{Vanishing Point Projection}
+This projection mode uses a defined vanishing point and virtually \emph{shifts} all nodes towards the vanishing point. How far the nodes will be shifted depends on the respective $z$-coordinate. The further a point is away from the screen-plain ($z=0$) the further it will be shifted. The vanishing point coordinates, a scaling factor and logarithmic scaling can be configured in the ProjectionConfig. Note: If 3d-projection is enabled but vanishing point mode is disabled ortographic projection will be used instead.
+
+\subsubsection{Ortographic Projection}
+The ortographic projection uses a transformation matrix to project the three-dimensional nodes onto the two-dimensional screen-plain. The used matrix and a offset may be defined in the ProjectionConfig. Note: This this mode is only used if the vanishing point projection is disabled.
+
+\begin{figure} [h]
+\[
+\left(
+\begin{array}{c}
+n_{x}^{'} \\
+n_{y}^{'}
+\end{array}
+\right)
+%
+=
+%
+\left(
+\begin{array}{ccc}
+x_0 & y_0 & z_0 \\
+x_1 & y_1 & z_1
+\end{array}
+\right)
+\cdot
+\left(
+\begin{array}{c}
+n_x  \\
+n_y  \\
+n_z
+\end{array}
+\right)
+%
++
+%
+\left(
+\begin{array}{c}
+offset_x \\
+offset_y
+\end{array}
+\right)
+\]
+\caption{Ortographic projection from node $n$ to two-dimensional node $n^{'}$.}
+\label{math:orthographicProjection}
+\end{figure}
 
 \begin{table}[h]
 \centering
@@ -129,41 +174,41 @@ TODO
 	\hline
 	Enabled & Boolean & If true 3d projection will be used.\\
 	\hline
-	UseVanishingPoint & Boolean & If true vanishing-point will be used\\
+	UseVanishingPoint & Boolean & If true vanishing point will be used\\
 	\hline
 	VanishingPointLogScale & Boolean & If true the projection towards the\\
 	& & VP will be scaled logarithmic.\\
 	\hline
-	VanishingPoint\textunderscore X & Double & $X$-coordinate of the VP.\\
+	VanishingPoint\textunderscore X & Double & $x$-coordinate of the VP.\\
 	\hline
-	VanishingPoint\textunderscore Y & Double & $Y$-coordinate of the VP.\\
+	VanishingPoint\textunderscore Y & Double & $y$-coordinate of the VP.\\
 	\hline
-	VanishingPoint\textunderscore Z & Double & $Z$-coordinate of the VP.\\
+	VanishingPoint\textunderscore Z & Double & $z$-coordinate of the VP.\\
 	\hline
 	VanishingPointScaling & Double & Weight of the projection scaling.\\
 	\hline
-	ScalingMatrixS0\textunderscore X & Double & $X_0$ value of the scaling matrix.\\
+	ScalingMatrixS0\textunderscore X & Double & $x_0$ value of the scaling matrix.\\
 	& & For ortographic use only.\\
 	\hline
-	ScalingMatrixS0\textunderscore Y & Double & $Y_0$ value of the scaling matrix.\\
+	ScalingMatrixS0\textunderscore Y & Double & $y_0$ value of the scaling matrix.\\
 	& & For ortographic use only.\\
 	\hline
-	ScalingMatrixS0\textunderscore Z & Double & $Z_0$ value of the scaling matrix.\\
+	ScalingMatrixS0\textunderscore Z & Double & $z_0$ value of the scaling matrix.\\
 	& & For ortographic use only.\\
 	\hline
-	ScalingMatrixS1\textunderscore X & Double & $X_1$ value of the scaling matrix.\\
+	ScalingMatrixS1\textunderscore X & Double & $x_1$ value of the scaling matrix.\\
 	& & For ortographic use only.\\
 	\hline
-	ScalingMatrixS1\textunderscore Y & Double & $Y_1$ value of the scaling matrix.\\
+	ScalingMatrixS1\textunderscore Y & Double & $y_1$ value of the scaling matrix.\\
 	& & For ortographic use only.\\
 	\hline
-	ScalingMatrixS1\textunderscore Z & Double & $Z_1$ value of the scaling matrix.\\
+	ScalingMatrixS1\textunderscore Z & Double & $z_1$ value of the scaling matrix.\\
 	& & For ortographic use only.\\
 	\hline
-	OffsetVector\textunderscore X & Double & $X$-value of the offset vector.\\
+	OffsetVector\textunderscore X & Double & $x$-value of the offset vector.\\
 	& & For ortographic use only.\\
 	\hline
-	OffsetVector\textunderscore Y & Double & $Y$-value of the offset vector.\\
+	OffsetVector\textunderscore Y & Double & $y$-value of the offset vector.\\
 	& & For ortographic use only.\\
 	\hline
 \end{tabular}
