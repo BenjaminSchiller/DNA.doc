@@ -43,6 +43,40 @@ A series is generated with 2 runs and 100 batches. The metric-value \textit{degr
 \label{tab:degreemax-aggr}
 \end{table}
 
+\subsection{Manual aggregation}
+Several occasions require a series to be aggregated manually. This might be the case when different runs are generated in parallel and aggregation shall take place when all generations are finished. Therefore the aggregation flag should be set as \emph{false} during generation. The aggregation can be started at a later point with:
+\begin{lstlisting}
+			Aggregation.aggregateSeries(SeriesData sd)
+\end{lstlisting}
+For a more elaborate example see the code snippet in \ref{code:example2}. It shows how to properly read and aggregate the series followed by a simple plotting call. Note that the aggregation process, including all computtations and writing of the aggregated data to the filesstem, takes place in the \emph{aggregateSeries} call. Setting the aggregation to the \emph{SeriesData} object is only required for plotting.
+\begin{figure} [h]
+\begin{lstlisting}
+public static void main(String[] args) throws AggregationException,
+		IOException, MetricNotApplicableException,
+		InterruptedException {
+	String seriesDir = "data/series/";
+	String plotDir = "data/series/plots/";
+	
+	// read the series (without aggregation or actual values)
+	SeriesData sd = SeriesData.read(seriesDir, "series", false, false);
+	
+	// aggregate
+	AggregatedSeries aggS = Aggregation.aggregateSeries(sd);
+
+	// set aggregation
+	sd.setAggregation(aggS);	
+	
+	// plot
+	Plotting.plot(sd, plotDir);
+}
+\end{lstlisting}
+\caption{Reading, aggregating and plotting a series.}
+\label{code:example2}
+\end{figure}
+
+
+
+
 \subsection{Configuration}
 The dynamic nature of generation may cause different runs of the same series to contain different amounts of batches. This leads to the question how aggregation may handle unavailable values due to differing amounts of batches. Essentially there are two ways to approach this problem, either ignore the absent values at all or assume a specific value for them. The following sections show how one may change which approach will be used and how this affects the results using a simple example of 3 runs each with different ammount of batches.
 
