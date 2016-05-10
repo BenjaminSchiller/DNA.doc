@@ -1,8 +1,16 @@
 \chapter{Configuration}
-TODO
+The graph visualization user interface is designed to be intuitive and easy to use. For most use cases the default configuration will offer a convenient GUI. However, more sophisticated occasions may require adapting the interface to specific needs. This is achieved by defining custom configuration files via JSON[\href{http://www.json.org}{json.org}]. The general configuration structure is shown in figure \ref{fig:configstruct}. The following sections will show how to work with the interface and create individual configurations.
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=1] {images/configstruct.pdf}
+\caption{Configuration Structure.}
+\label{fig:configstruct}
+\end{figure}
+
 
 \section{GraphPanelConfig}
-TODO
+The GraphPanelConfig contains the most general configurable aspects as well as additional configuration objects, namely a \emph{ProjectionConfig}, a \emph{RulesConfig} and a \emph{CaptureConfig}. All configurable values and their descriptions are listed in \ref{tab:graphPanelConfigValues}.
 
 \begin{table}[h]
 \centering
@@ -53,7 +61,7 @@ TODO
 	\hline
 	RulesConfig & JSON-Object & A rules config. See \ref{ss:rulesConfig}.\\
 	\hline
-	3dProjectionConfig & JSON-Object & A 3dProjection config. See \ref{ss:projectionConfig}.\\
+	ProjectionConfig & JSON-Object & A Projection config. See \ref{ss:projectionConfig}.\\
 	\hline
 	CaptureConfig & JSON-Object & A capture config. See \ref{ss:captureConfig}.\\
 	\hline
@@ -64,7 +72,51 @@ TODO
 
 \subsection{RulesConfig}
 \label{ss:rulesConfig}
-TODO
+The graph visualization allows to define so called \emph{GraphStyleRules} to modify the graph presentation in several ways. See \ref{s:graphStyleRules} for more details. In this section we focus on how to enable and configure said rules using the configuration. A RulesConfig holds multiple configurable \emph{GraphStyleRuleConfis}, each representing a single GraphStyleRule. Each GraphStyleRuleConfig will be identified by a key pointing to the rules class-path. Additionally, there are three shared configurable values for each rule: the \emph{name}, the \emph{enabled}-flag and the \emph{hidden}-flag. Furthermore, one may add additional parameters, which will be used by the respective rules. Note: The way these parameters will be treated is up to the given rule. See the following example \ref{config:exampleRuleConfig} for an actual RulesConfig definition. The first rule contains all possible configurable values and one additional parameter: \emph{Growth}. The NodeSizeByDegree class increases/decreases each nodes size by the growth-value whenever their degree is being incremented or decremented respectively. The second rule does not contain any values at all. However it will still be enabled.
+
+\begin{figure} [h]
+\begin{lstlisting}
+"RulesConfig": {
+	"dna.visualization.graph.rules.nodes.NodeSizeByDegree": {
+		"Name": "defaultNodeSizeByDegree",
+		"Growth": 0.3,
+		"Enabled": true,
+		"Hidden": false,
+	},
+	"dna.visualization.graph.rules.nodes.RandomNodeColor": {},
+}
+\end{lstlisting}
+\caption{Example RuleConfig definition.}
+\label{config:exampleRuleConfig}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|l|}\hline
+	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
+	\hline
+	Name & String & Name of the rule.\\
+	& & (If not set \emph{key} will be used as name.)\\
+	\hline
+	Enabled & Boolean & If set the rule is enabled.\\
+	& & (If not set will be assumed as \emph{true}.)\\
+	\hline
+	Hidden & Boolean & If set the rule is hidden from the interface.\\
+	& & (If not set will be assumed as \emph{false}.)\\
+	\hline
+	Parameter$_0$ & Parameter & First parameter of the respective rule.\\
+	\hline
+	Parameter$_1$ & Parameter & Second parameter of the respective rule.\\
+	\hline
+	... & ... & ...\\
+	\hline	
+	Parameter$_i$ & Parameter & i-th parameter of the respective rule.\\
+	\hline
+\end{tabular}
+\caption{Configuration values of a GraphStyleRuleConfig.}
+\label{tab:graphStyleRuleConfigValues}
+\end{table}
+
 
 \subsection{ProjectionConfig}
 \label{ss:projectionConfig}
