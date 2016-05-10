@@ -1,2 +1,81 @@
 \chapter{Configuration}
 TODO
+
+\section{GraphPanelConfig}
+TODO
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|l|}\hline
+	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
+	\hline
+	Width & Integer & Width of the visualization window.\\
+	\hline
+	Height & Integer & Height of the visualization window.\\
+	\hline
+	Fullscreen & Boolean & If true the visualization window\\
+	& & will be maximized on initialization.\\
+	\hline
+	StatPanelEnabled & Boolean & If true the visualization window\\
+	& & will contain the StatPanel.\\
+	\hline
+	TextPanelEnabled & Boolean & If true the visualization window\\
+	& & will contain the TextPanel.\\
+	\hline
+	TimetampFormat & String & Sets the used timestamp format.\\
+	\hline
+	RenderHQ & Boolean & Enables high-quality rendering.\\
+	\hline
+	RenderAA & Boolean & Enables anti-aliasing.\\
+	\hline
+	ZoomSpeed & Double & Zoom speed factor.\\
+	\hline
+	ScrollSpeed & Double & Scroll speed factor.\\
+	\hline	
+	ToolTipsEnabled & Boolean & If true tooltips will be enabled.\\
+	\hline	
+	DirectedEdgeArrowsEnabled & Boolean & If true directed edges will\\
+	& & be rendered with arrow-heads.\\
+	\hline
+	NodeSize & Double & Default size of nodes.\\
+	\hline
+	NodeColor & String & Default color of nodes. All CSS color-\\
+	& & keywords are available.\\
+	& & See TODO CITE as reference.\\
+	%http://www.w3schools.com/colors/colors_names.asp
+	\hline
+	EdgeSize & Double & Default size of edges.\\
+	\hline
+	Layouter & Enum & Layouter used to layout the graph.\\
+	& & Possible values: none, auto, linlog.\\
+	\hline
+	AutoLayoutForce & Double & Force of the auto-layouter.\\
+	\hline
+	RulesConfig & JSON-Object & A rules config. See \ref{ss:rulesConfig}.\\
+	\hline
+	3dProjectionConfig & JSON-Object & A 3dProjection config. See \ref{ss:projectionConfig}.\\
+	\hline
+	CaptureConfig & JSON-Object & A capture config. See \ref{ss:captureConfig}.\\
+	\hline
+\end{tabular}
+\caption{Configuration values of GraphPanelConfig.}
+\label{tab:graphPanelConfigValues}
+\end{table}
+
+\subsection{RulesConfig}
+\label{ss:rulesConfig}
+TODO
+
+\subsection{ProjectionConfig}
+\label{ss:projectionConfig}
+TODO
+
+\subsection{CaptureConfig}
+\label{ss:captureConfig}
+TODO
+
+\section{Default-Configuration file}
+TODO
+
+\section{Building own configuration files}
+TODO
