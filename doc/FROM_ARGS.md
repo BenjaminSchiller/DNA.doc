@@ -137,6 +137,14 @@ For each type, a GraphDataStructures object (gds) must be given.
 - `Timestamped` dir filename name remapIndex separator commentPrefix timestampedGraphType parameter
 	- separator for file format is specified (default is ',')
 	- line prefix for comments (will be skipped) is specified (default is '%')
+- `Konect` dir filename name edgeType edgeParameter removeZeroDegreeNodes graphType graphParameter
+	- edgeType is `ADD`, `ADD_REMOVE`, `MULTI`, or `WEIGHTED`
+	- edgeParameter is only used for `WEIGHTED` (can be empty for the other cases) and specifies the offset and factor how to transform the weight (delimiter '-')
+		- `$offset-$factor`, i.e., `w' = $offset + $factor * w`
+	- removeZeroDegreeNodes must be `true` or `false`
+	- graphType is `PROCESSED_EDGES`, `TIMESTAMP`, `TOTAL_EDGES`, or `TOTAL_NODES`
+	- the number of lines read and processed depends on the graph type and the parameters then specifies:
+		- number of processed edges, maximum timestamp of edges to include, process edges until total is reached, or process edges until total number of nodes is reached
 
 ### BatchGeneratorFromArgs
 
@@ -176,6 +184,10 @@ For each type, a GraphGenerator (gg) must be given.
 		- BATCH_SIZE: process lines until batch (node addition + edge additions) has size parameter
 - `Timestamped` timestampedBatchType parameter maxTImestamp
 	- stop after reading timestamp maxTimestamp
+- `Konect` batchType batchParameter
+	- batchType is `BATCH_SIZE`, `EDGE_GROWTH`, `NODE_GROWTH`, `PROCESSED_EDGES`, `TIMESTAMP`, `TIMESTAMPS`
+	- depending on the batch type, the batch parameter specifies how many lined / edges should be processed for the next batch:
+		- until a total batch size is reached, the edge growth is reached, the node growth is reached, the specified number of edges is processed, the parameter is used as offset to the previous timestamp and defined the maximum timestamp of an edge, or a list of timestamps is specified (instead of an offset) separated by ';'
 
 ### MetricFromArgs
 
