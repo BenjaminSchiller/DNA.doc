@@ -218,7 +218,7 @@ offset_y
 
 \subsection{CaptureConfig}
 \label{ss:captureConfig}
-TODO
+The capture config defines how screenshot and video captures will behave. This includes basic options like destination directory as well as more detailed options, e.g. the frames-per-second included in the video file. For all available configuration values see \ref{tab:captureConfigValues}.
 
 \begin{table}[h]
 \centering
@@ -245,7 +245,7 @@ TODO
 	\hline
 	ScreenshotDir & String & Destination directory for screenshots.\\
 	\hline
-	ScreenshotFormat & String & Screenshot format (png, jpg...).\\
+	ScreenshotFormat & String & Screenshot format (jpeg, png, bmp, wbmp, gif).\\
 	\hline
 	ScreenshotStabilityThreshold & Double & Stability threshold of the layouter when\\
 	& & taking screenshots waiting for stability.\\
@@ -262,7 +262,36 @@ TODO
 \end{table}
 
 \section{Default-Configuration file}
-TODO
+The default configuration file located in ”config/gvis/gvis default.cfg” holds default values for each type of object and all possible properties. It represents the ultimate structure a configuration file can assume. When creating manual configuration files missing values will be replaced with the respective values from the default configuration, thus allowing to craft own configurations easily and with little effort. Note that any changes on the default file can prevent the interface from running, for example removing values that are needed as default references.
 
 \section{Building own configuration files}
-TODO
+When creating an own configuration file it is recommended to take the default config structure and fill it with all desired values and settings. The following example \ref{config:randomNodes} shows a minimal configuration with the random node sizes and colors. Additionally the size is set to 640x480 and the stat- and text-panels are disabled. See \ref{fig:randomNodesVis} for the resulting GraphPanel.
+
+\begin{figure} [h]
+\begin{lstlisting}
+{
+	"GraphPanelConfig": {
+		"Width": 640, 
+		"Height": 480,
+	
+		"StatPanelEnabled": false,
+		"TextPanelEnabled": false,
+	
+		"RulesConfig": {	
+			"dna.visualization.graph.rules.nodes.RandomNodeSize": {},
+			"dna.visualization.graph.rules.nodes.RandomNodeColor": {},
+		}
+	}
+}
+\end{lstlisting}
+\caption{Example of a small GraphPanelConfig.}
+\label{config:randomNodes}
+\end{figure}
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.9] {images/random-node-example}
+\caption{Example visualization of GraphPanelConfig from \ref{config:randomNodes}.}
+\label{fig:randomNodesVis}
+\end{figure}
+
