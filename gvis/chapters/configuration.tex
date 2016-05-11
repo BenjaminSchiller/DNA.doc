@@ -225,7 +225,7 @@ The capture config defines how screenshot and video captures will behave. This i
 \begin{tabular}[h]{|l|l|l|}\hline
 	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
 	\hline
-	CaptureArea & Enum & Default area to be recorded.\\
+	RecordArea & Enum & Default area to be recorded.\\
 	& & Possible values: content, graph, full\\
 	\hline
 	VideoDir & String & Destination directory for captured videos.\\
@@ -238,10 +238,17 @@ The capture config defines how screenshot and video captures will behave. This i
 	\hline
 	VideoMaximumLength & Integer & Maximum length of videos in seconds.\\
 	\hline
-	VideoRecordFPS & Integer & Frames per second of the resultin video.\\
+	VideoRecordFps & Integer & Frames per second recorded from the screen.\\
 	\hline
-	VideoAutoRecrod & Boolean & If set video recording will automatically\\
+	VideoFileFps & Integer & Frames per second of the resulting video file.\\
+	\hline
+	VideoAutoRecord & Boolean & If set video recording will automatically\\
 	& & start upon initialization.\\
+	\hline
+	VideoUseCodec & Boolean & If set video will be encoded using\\
+	& & the Techsmith codec. Else uncompressed. TODO CITE\\
+	\hline
+	VideoBufferImagesOnFs & Boolean & If true images will be buffered on the filesystem.\\
 	\hline
 	ScreenshotDir & String & Destination directory for screenshots.\\
 	\hline
@@ -291,7 +298,7 @@ When creating an own configuration file it is recommended to take the default co
 \begin{figure} [h]
 \centering
 \includegraphics [scale=0.9] {images/random-node-example}
-\caption{Example visualization of GraphPanelConfig from \ref{config:randomNodes}.}
+\caption{Example visualization of the GraphPanelConfig from \ref{config:randomNodes}.}
 \label{fig:randomNodesVis}
 \end{figure}
 
