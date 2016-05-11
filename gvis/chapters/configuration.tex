@@ -3,7 +3,7 @@ The graph visualization user interface is designed to be intuitive and easy to u
 
 \begin{figure} [h]
 \centering
-\includegraphics [scale=1] {images/configstruct.pdf}
+\includegraphics [scale=0.85] {images/configstruct.pdf}
 \caption{Configuration Structure.}
 \label{fig:configstruct}
 \end{figure}
@@ -68,6 +68,34 @@ The GraphPanelConfig contains the most general configurable aspects as well as a
 \end{tabular}
 \caption{Configuration values of GraphPanelConfig.}
 \label{tab:graphPanelConfigValues}
+\end{table}
+
+\subsection{WaitConfig}
+\label{ss:waitConfig}
+The WaitConfig object is used to configure special wait times used for smooth graph visualization. When adding multiple nodes and edges at once the layout algorithm may cause a very shaking and unstable view of the graph. Therefore, artificial wait times after each event are used to guarantee a smoother experience. Table \ref{tab:waitConfigValues} shows all configurable values.
+
+\begin{table}[h]
+\centering
+\begin{tabular}[h]{|l|l|l|}\hline
+	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
+	\hline
+	Enabeld & Boolean & If true wait times are enabled.\\
+	\hline
+	EdgeAddition & Long & Wait time after edge additions in ms.\\
+	\hline
+	EdgeRemoval & Long & Wait time after edge removals in ms.\\
+	\hline
+	EdgeWeightChange & Long & Wait time after edge weight changes in ms.\\
+	\hline
+	NodeAddition & Long & Wait time after node additions in ms.\\
+	\hline
+	NodeRemoval & Long & Wait time after node removals in ms.\\
+	\hline
+	NodeWeightChange & Long & Wait time after node weight changes in ms.\\
+	\hline
+\end{tabular}
+\caption{Configuration values of WaitConfig.}
+\label{tab:waitConfigValues}
 \end{table}
 
 \subsection{RulesConfig}
