@@ -10,7 +10,23 @@ The graph visualization user interface is designed to be intuitive and easy to u
 
 
 \section{GraphPanelConfig}
-The GraphPanelConfig contains the most general configurable aspects as well as additional configuration objects, namely a \emph{ProjectionConfig}, a \emph{RulesConfig} and a \emph{CaptureConfig}. All configurable values and their descriptions are listed in \ref{tab:graphPanelConfigValues}.
+The GraphPanelConfig contains the most general configurable aspects as well as additional configuration objects, namely a \emph{WaitConfig}, \emph{ProjectionConfig}, \emph{RulesConfig} and a \emph{CaptureConfig}. The default GraphPanelConfig will be loaded if no other config path is given explicitly prior to initialization. This may be achieved either by setting the respective property via 
+\begin{lstlisting}
+	Config.overwrite("GRAPH_VIS_CONFIG_PATH", <config-path>);
+\end{lstlisting}
+or by calling the method:
+\begin{lstlisting}
+	GraphVisualization.setConfigPath(<config-path>);
+\end{lstlisting}
+All configurable values may be altered during runtime with getter- and setter-methods. In order to change values of subconfigs, e.g. the video record destination directory, one has to retrieve the CaptureConfig from the GraphPanelConfig, which is first retrieved from the GraphPanel directly. This specific case may look like this:
+\begin{lstlisting}
+	GraphPanel panel = GraphVisualization.getCurrentGraphPanel();
+	GraphPanelConfig config = panel.getGraphPanelConfig();
+	CaptureConfig ccfg = config.getCaptureConfig();
+	ccfg.setVideoDir("myvideos/");
+\end{lstlisting}
+However, specific values, which are only read and used at initialization, won't have any effect upon change. E.g. the window size of the graph panel is only read when the panel is being initialized. Any modification at a later point won't affect the GUI. 
+All configurable values of the GraphPanelConfig and their descriptions are listed in \ref{tab:graphPanelConfigValues}.
 
 \begin{table}[h]
 \centering
@@ -56,6 +72,8 @@ The GraphPanelConfig contains the most general configurable aspects as well as a
 	& & Possible values: none, auto, linlog.\\
 	\hline
 	AutoLayoutForce & Double & Force of the auto-layouter.\\
+	\hline
+	WaitConfig & JSON-Object & A wait config. See \ref{ss:waitConfig}.\\
 	\hline
 	RulesConfig & JSON-Object & A rules config. See \ref{ss:rulesConfig}.\\
 	\hline
