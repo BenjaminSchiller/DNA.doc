@@ -1,12 +1,5 @@
 \chapter{Configuration}
-The graph visualization user interface is designed to be intuitive and easy to use. For most use cases the default configuration will offer a convenient GUI. However, more sophisticated occasions may require to adapt the interface to specific needs. This is achieved by defining custom tooltips, GraphStyleRules and custom configuration files via JSON \cite{json}. The following sections will show how to work with the interface and create individual configurations.
-
-\begin{figure} [h]
-\centering
-\includegraphics [scale=0.85] {images/configstruct.pdf}
-\caption{Configuration Structure.}
-\label{fig:configstruct}
-\end{figure}
+The graph visualization user interface is designed to be intuitive and easy to use. For most use cases the default configuration will offer a convenient GUI. However, more sophisticated occasions may require to adapt the interface to specific needs. This is achieved by defining custom ToolTips, GraphStyleRules and custom configuration files via JSON \cite{json}. The following sections will show how to work with the interface and create individual configurations.
 
 \section{ToolTips}
 \label{s:toolTips}
@@ -15,7 +8,16 @@ The graph visualization user interface is designed to be intuitive and easy to u
 \label{s:graphStyleRules}
 
 \section{GraphPanelConfig}
-The GraphPanelConfig is a configuration object for a GraphPanel. It contains the most general configurable aspects as well as additional configuration objects, namely a \emph{WaitConfig}, \emph{ProjectionConfig}, \emph{RulesConfig} and a \emph{CaptureConfig}. The general configuration structure is shown in figure \ref{fig:configstruct}. A default GraphPanelConfig will be loaded if no other config path is given explicitly prior to initialization. This may be achieved either by setting the respective property via 
+The GraphPanelConfig is a configuration object for a GraphPanel. It contains the most general configurable aspects as well as additional configuration objects, namely a \emph{WaitConfig}, \emph{ProjectionConfig}, \emph{RulesConfig} and a \emph{CaptureConfig}. The general configuration structure is shown in figure \ref{fig:configstruct}.
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.85] {images/configstruct.pdf}
+\caption{Configuration Structure.}
+\label{fig:configstruct}
+\end{figure}
+
+A default GraphPanelConfig will be loaded if no other config path is given explicitly prior to initialization. This may be achieved either by setting the respective property via 
 \begin{lstlisting}
 	Config.overwrite("GRAPH_VIS_CONFIG_PATH", <config-path>);
 \end{lstlisting}
@@ -60,7 +62,9 @@ All configurable values of the GraphPanelConfig and their descriptions are liste
 	ZoomSpeed & Double & Zoom speed factor.\\
 	\hline
 	ScrollSpeed & Double & Scroll speed factor.\\
-	\hline	
+	\hline
+	RotationSpeed & Double & Rotation speed factor.\\
+	\hline
 	ToolTipsEnabled & Boolean & If true tooltips will be enabled.\\
 	\hline	
 	DirectedEdgeArrowsEnabled & Boolean & If true directed edges will\\
