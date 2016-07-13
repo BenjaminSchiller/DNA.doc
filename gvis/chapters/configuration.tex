@@ -3,7 +3,7 @@ The graph visualization user interface is designed to be intuitive and easy to u
 
 \section{Implementing own ToolTips}
 \label{s:impl-tooltips}
-The abstract ToolTip-class (\textit{dna.visualization.graph.toolTips.ToolTip}) is a wrapper class for the GraphStream Sprite class. Sprites are objects inside the GraphStream graph that can be used to display information and data. ToolTip introduces several methods, which make the handling of sprites more enjoyable. There are two types of ToolTips currently implemented in DNA: Buttons and InfoLabels. They are both represented by an abstract class (\textit{dna.visualization.graph.toolTips.button.Button} \& \textit{dna.visualization.graph.toolTips.infoLabel.InfoLabel}), which extend the basic ToolTip class. In order to implement own ToolTips one is encouraged to extend either Button or InfoLabel. Additionally it is necessary to define a constructor as follows:
+The abstract ToolTip-class (\textit{dna.visualization.graph.toolTips.ToolTip}) is a wrapper class for the GraphStream Sprite class. Sprites are objects inside the GraphStream graph that can be used to display information and data. ToolTip introduces several methods, which make the handling of sprites more enjoyable. There are two types of ToolTips currently implemented in DNA: Buttons and InfoLabels. They are both represented by an abstract class (\textit{dna.visualization.graph.toolTips.button.Button} \& \textit{dna.visualization.graph.toolTips.infoLabel.InfoLabel}), which extend the basic ToolTip class. In order to implement own ToolTips one is encouraged to extend either Button or InfoLabel. Additionally, it is necessary to define a constructor as follows:
 \begin{lstlisting}
 public constructor(Sprite s, String name, Node n, Parameter[] params)
 \end{lstlisting}
@@ -18,6 +18,8 @@ For additional functionality, like mouse interactions, one can overwrite the \te
 
 \section{GraphStyleRules}
 \label{s:graphStyleRules}
+The GraphStyleRules are 
+
 
 \section{GraphPanelConfig}
 The GraphPanelConfig is a configuration object for a GraphPanel. It contains the most general configurable aspects as well as additional configuration objects, namely a \emph{WaitConfig}, \emph{ToolTipsConfig}, \emph{RulesConfig}, \emph{ProjectionConfig} and a \emph{CaptureConfig}. The general configuration structure is shown in figure \ref{fig:configstruct}.
@@ -48,6 +50,7 @@ However, specific values, which are only read and used at initialization, won't 
 All configurable values of the GraphPanelConfig and their descriptions are listed in \ref{tab:graphPanelConfigValues}.
 
 \begin{table}[h]
+\caption{Configuration values of GraphPanelConfig.}
 \centering
 \begin{tabular}[h]{|l|l|l|}\hline
 	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
@@ -92,16 +95,15 @@ All configurable values of the GraphPanelConfig and their descriptions are liste
 	\hline
 	AutoLayoutForce & Double & Force of the auto-layouter.\\
 	\hline
-	WaitConfig & JSON-Object & A wait config. See \ref{ss:waitConfig}.\\
+	WaitConfig & JSON-Object & A wait config. See section \ref{ss:waitConfig}.\\
 	\hline
-	RulesConfig & JSON-Object & A rules config. See \ref{ss:rulesConfig}.\\
+	RulesConfig & JSON-Object & A rules config. See section \ref{ss:rulesConfig}.\\
 	\hline
-	ProjectionConfig & JSON-Object & A Projection config. See \ref{ss:projectionConfig}.\\
+	ProjectionConfig & JSON-Object & A Projection config. See section \ref{ss:projectionConfig}.\\
 	\hline
-	CaptureConfig & JSON-Object & A capture config. See \ref{ss:captureConfig}.\\
+	CaptureConfig & JSON-Object & A capture config. See section \ref{ss:captureConfig}.\\
 	\hline
 \end{tabular}
-\caption{Configuration values of GraphPanelConfig.}
 \label{tab:graphPanelConfigValues}
 \end{table}
 
@@ -110,6 +112,7 @@ All configurable values of the GraphPanelConfig and their descriptions are liste
 The WaitConfig object is used to configure special wait times used for smooth graph visualization. When adding multiple nodes and edges at once the layout algorithm may cause a very shaking and unstable view of the graph. Therefore, artificial wait times after each event are used to guarantee a smoother experience. Table \ref{tab:waitConfigValues} shows all configurable values.
 
 \begin{table}[h]
+\caption{Configuration values of WaitConfig.}
 \centering
 \begin{tabular}[h]{|l|l|l|}\hline
 	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
@@ -129,7 +132,6 @@ The WaitConfig object is used to configure special wait times used for smooth gr
 	NodeWeightChange & Long & Wait time after node weight changes in ms.\\
 	\hline
 \end{tabular}
-\caption{Configuration values of WaitConfig.}
 \label{tab:waitConfigValues}
 \end{table}
 
@@ -163,7 +165,7 @@ The ToolTipsConfig only has one static config field, which is \emph{Enabled} and
 
 \subsection{RulesConfig}
 \label{ss:rulesConfig}
-The graph visualization allows to define so called \emph{GraphStyleRules} to modify the graph presentation in several ways. See \ref{s:graphStyleRules} for more details. In this section we focus on how to enable and configure said rules using the configuration. A RulesConfig holds multiple configurable \emph{GraphStyleRuleConfis}, each representing a single GraphStyleRule. Each GraphStyleRuleConfig will be identified by a key pointing to the rules class-path. Additionally, there are three shared configurable values for each rule: the \emph{name}, the \emph{enabled}-flag and the \emph{hidden}-flag. Furthermore, one may add additional parameters, which will be used by the respective rules. Note: The way these parameters will be treated is up to the given rule. See the following example \ref{config:exampleRuleConfig} for an actual RulesConfig definition. The first rule contains all possible configurable values and one additional parameter: \emph{Growth}. The NodeSizeByDegree class increases/decreases each nodes size by the growth-value whenever their degree is being incremented or decremented respectively. The second rule does not contain any values at all. However it will still be enabled.
+The graph visualization allows to define so called \emph{GraphStyleRules} to modify the graph presentation in several ways. See section \ref{s:graphStyleRules} for more details. In this section we focus on how to enable and configure said rules using the configuration. A RulesConfig holds multiple configurable \emph{GraphStyleRuleConfis}, each representing a single GraphStyleRule. Each GraphStyleRuleConfig will be identified by a key pointing to the rules class-path. Additionally, there are three shared configurable values for each rule: the \emph{name}, the \emph{enabled}-flag and the \emph{hidden}-flag. Furthermore, one may add additional parameters, which will be used by the respective rules. Note: The way these parameters will be treated is up to the given rule. See the following example \ref{config:exampleRuleConfig} for an actual RulesConfig definition. The first rule contains all possible configurable values and one additional parameter: \emph{Growth}. The NodeSizeByDegree class increases/decreases each nodes size by the growth-value whenever their degree is being incremented or decremented respectively. The second rule does not contain any values at all. However it will still be enabled.
 
 \begin{figure} [h]
 \begin{lstlisting}
@@ -182,6 +184,7 @@ The graph visualization allows to define so called \emph{GraphStyleRules} to mod
 \end{figure}
 
 \begin{table}[h]
+\caption{Configuration values of a GraphStyleRuleConfig.}
 \centering
 \begin{tabular}[h]{|l|l|l|}\hline
 	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
@@ -204,20 +207,19 @@ The graph visualization allows to define so called \emph{GraphStyleRules} to mod
 	Parameter$_i$ & Parameter & i-th parameter of the respective rule.\\
 	\hline
 \end{tabular}
-\caption{Configuration values of a GraphStyleRuleConfig.}
 \label{tab:graphStyleRuleConfigValues}
 \end{table}
 
 
 \subsection{ProjectionConfig}
 \label{ss:projectionConfig}
-Since the graphstream library does not support three-dimensional coordinates, two simple projection mechanisms have been implemented to simulate 3D behaviour. In this mode the node weights are assumed as 3D coordinates. For all configurable values see \ref{tab:projectionConfigValues}.
+Since the graphstream library does not support three-dimensional coordinates, two simple projection mechanisms have been implemented to simulate 3D behaviour. In this mode the node weights are assumed as 3D coordinates. For all configurable values see table \ref{tab:projectionConfigValues}.
 
 \subsubsection{Vanishing Point Projection}
 This projection mode uses a defined vanishing point and virtually \emph{shifts} all nodes towards the vanishing point. How far the nodes will be shifted depends on the respective $z$-coordinate. The further a point is away from the screen-plain ($z=0$) the further it will be shifted. The vanishing point coordinates, a scaling factor and logarithmic scaling can be configured in the ProjectionConfig. Note: If 3d-projection is enabled but vanishing point mode is disabled ortographic projection will be used instead.
 
 \subsubsection{Ortographic Projection}
-The ortographic projection uses a transformation matrix to project the three-dimensional nodes onto the two-dimensional screen-plain, see \ref{math:orthographicProjection}. The used matrix and a offset may be defined in the ProjectionConfig. Note: This mode is only used if the vanishing point projection is disabled.
+The ortographic projection uses a transformation matrix to project the three-dimensional nodes onto the two-dimensional screen-plain, see figure \ref{math:orthographicProjection}. The used matrix and a offset may be defined in the ProjectionConfig. Note: This mode is only used if the vanishing point projection is disabled.
 
 \begin{figure} [h]
 \[
@@ -259,6 +261,7 @@ offset_y
 \end{figure}
 
 \begin{table}[h]
+\caption{Configuration values of a ProjectionConfig.}
 \centering
 \begin{tabular}[h]{|l|l|l|}\hline
 	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
@@ -303,15 +306,15 @@ offset_y
 	& & For ortographic use only.\\
 	\hline
 \end{tabular}
-\caption{Configuration values of a ProjectionConfig.}
 \label{tab:projectionConfigValues}
 \end{table}
 
 \subsection{CaptureConfig}
 \label{ss:captureConfig}
-The capture config defines how screenshot and video captures will behave. This includes basic options like destination directory as well as more detailed options, e.g. the frames-per-second included in the video file. For all available configuration values see \ref{tab:captureConfigValues}.
+The capture config defines how screenshot and video captures will behave. This includes basic options like destination directory as well as more detailed options, e.g. the frames-per-second included in the video file. For all available configuration values see table \ref{tab:captureConfigValues}.
 
 \begin{table}[h]
+\caption{Configuration values of CaptureConfig.}
 \centering
 \begin{tabular}[h]{|l|l|l|}\hline
 	\textbf{Value} & \textbf{Type} & \textbf{Description}\\
@@ -355,7 +358,6 @@ The capture config defines how screenshot and video captures will behave. This i
 	& & let the machine move the panel to foreground.\\
 	\hline
 \end{tabular}
-\caption{Configuration values of CaptureConfig.}
 \label{tab:captureConfigValues}
 \end{table}
 
@@ -363,7 +365,7 @@ The capture config defines how screenshot and video captures will behave. This i
 The default configuration file located in ”config/gvis/gvis default.cfg” holds default values for each type of object and all possible properties. It represents the ultimate structure a configuration file can assume. When creating manual configuration files missing values will be replaced with the respective values from the default configuration, thus allowing to craft own configurations easily and with little effort. Note that any changes on the default file can prevent the interface from running, for example removing values that are needed as default references.
 
 \section{Building own configuration files}
-When creating an own configuration file it is recommended to take the default config structure and fill it with all desired values and settings. The following example \ref{config:randomNodes} shows a minimal configuration with the random node sizes and colors. Additionally the size is set to 640x480 and the stat- and text-panels are disabled. See \ref{fig:randomNodesVis} for the resulting GraphPanel.
+When creating an own configuration file it is recommended to take the default config structure and fill it with all desired values and settings. The following example \ref{config:randomNodes} shows a minimal configuration with the random node sizes and colors. Additionally the size is set to 640x480 and the stat- and text-panels are disabled. See figure \ref{fig:randomNodesVis} for the resulting GraphPanel.
 
 \begin{figure} [h]
 \begin{lstlisting}
