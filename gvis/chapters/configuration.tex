@@ -1,7 +1,7 @@
 \chapter{Configuration}
 The graph visualization user interface is designed to be intuitive and easy to use. For most use cases the default configuration will offer a convenient GUI. However, more sophisticated occasions may require to adapt the interface to specific needs. This is achieved by defining custom ToolTips, GraphStyleRules and custom configuration files via JSON \cite{json}. The following sections will show how to work with the interface and create individual configurations.
 
-\section{Implementing own ToolTips}
+\section{ToolTips}
 \label{s:impl-tooltips}
 The abstract ToolTip-class (\textit{dna.visualization.graph.toolTips.ToolTip}) is a wrapper class for the GraphStream Sprite class. Sprites are objects inside the GraphStream graph that can be used to display information and data. ToolTip introduces several methods, which make the handling of sprites more enjoyable. There are two types of ToolTips currently implemented in DNA: Buttons and InfoLabels. They are both represented by an abstract class (\textit{dna.visualization.graph.toolTips.button.Button} \& \textit{dna.visualization.graph.toolTips.infoLabel.InfoLabel}), which extend the basic ToolTip class. In order to implement own ToolTips one is encouraged to extend either Button or InfoLabel. Additionally, it is necessary to define a constructor as follows:
 \begin{lstlisting}
@@ -18,7 +18,16 @@ For additional functionality, like mouse interactions, one can overwrite the \te
 
 \section{GraphStyleRules}
 \label{s:graphStyleRules}
-The GraphStyleRules are 
+The GraphStyleRules are rules designed to change the graphical representation of the given graph. All GraphStyleRules have to extend the abstract \emph{GraphStyleRule} class (located in dna.visualization.graph.rules) and can override one or more of the following methods in order to dynamically behave and react to certain events:
+\begin{itemize}
+\item onNodeAddition(Node n, Weight w)
+\item onNodeRemoval(Node n)
+\item onNodeWeightChange(Node n, Weight wNew, Weight wOld)
+\item onEdgeAddition(Edge e, Weight w, Node n1, Node n2)
+\item onEdgeRemoval(Edge e, Node n1, Node n2)
+\item onEdgeWeightChange(Edge e, Weight wNew, Weight wOld)
+\end{itemize}
+The handed over \emph{Node} and \emph{Edge} objects are nodes and edges of the graphstream graph (not from DNA!). Therefore, one can make use of the huge styling possibilities included in graphstream. The utility class \emph{GraphStyleUtils} contains several methods, e.g. \emph{setShape()}, \emph{setColor()} ..., which can be used to change the graphic presentation of the given nodes and edges. For example implementations check the included rules like \emph{RandomNodeSize} or \emph{RandomNodeColor}. In section \ref{ss:rulesConfig} we will discuss how GraphStyleRules can be loaded and used in gvis.
 
 
 \section{GraphPanelConfig}
