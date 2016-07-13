@@ -78,9 +78,9 @@ The minimum and maximum of a distribution may not be very meaningful in a lot of
 \begin{lstlisting}
 Config.overwrite("GENERATE_DISTRIBUTION_PERCENT_VALUES", "true")
 \end{lstlisting}
-Furthermore, one can explicitly specify, which bounds will be computed by setting a list of integers (in String format delimited by ','). For instance, computing the upper bound for 95\% and 60\% will look like this:
+Furthermore, one can explicitly specify, which bounds will be computed by setting a list of doubles (in String format delimited by ','). For instance, computing the upper bound for 95\% and 60.5\% will look like this:
 \begin{lstlisting}
-Config.overwrite("EXTRA_VALUE_DISTRIBUTION_PERCENT", "95, 60")
+Config.overwrite("EXTRA_VALUE_DISTRIBUTION_PERCENT", "95, 60.5")
 \end{lstlisting}
 
 
