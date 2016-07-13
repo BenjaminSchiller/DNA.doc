@@ -1,14 +1,26 @@
 \chapter{Configuration}
 The graph visualization user interface is designed to be intuitive and easy to use. For most use cases the default configuration will offer a convenient GUI. However, more sophisticated occasions may require to adapt the interface to specific needs. This is achieved by defining custom ToolTips, GraphStyleRules and custom configuration files via JSON \cite{json}. The following sections will show how to work with the interface and create individual configurations.
 
-\section{ToolTips}
-\label{s:toolTips}
+\section{Implementing own ToolTips}
+\label{s:impl-tooltips}
+The abstract ToolTip-class (\textit{dna.visualization.graph.toolTips.ToolTip}) is a wrapper class for the GraphStream Sprite class. Sprites are objects inside the GraphStream graph that can be used to display information and data. ToolTip introduces several methods, which make the handling of sprites more enjoyable. There are two types of ToolTips currently implemented in DNA: Buttons and InfoLabels. They are both represented by an abstract class (\textit{dna.visualization.graph.toolTips.button.Button} \& \textit{dna.visualization.graph.toolTips.infoLabel.InfoLabel}), which extend the basic ToolTip class. In order to implement own ToolTips one is encouraged to extend either Button or InfoLabel. Additionally it is necessary to define a constructor as follows:
+\begin{lstlisting}
+public constructor(Sprite s, String name, Node n, Parameter[] params)
+\end{lstlisting}
+It will be called on initialization with exactly this parameters. The Parameter[] array can be used to pass additional parameters. Beside the constructor each ToolTip implementation (in this example the class would be "BananaToolTip") has to have a method:
+\begin{lstlisting}
+public static BananaToolTip getFromSprite(Sprite s) {
+	return (BananaToolTip) ToolTip.getToolTipFromSprite(s);
+}
+\end{lstlisting}
+For additional functionality, like mouse interactions, one can overwrite the \textit{onLeftClick()} and \textit{onRightClick()} methods. See the actual default ToolTip implementations for well documented examples. Also note that the \emph{dna.visualization.graph.rules.GraphStyleUtils}-class offers a variety of utility methods, which can be used to set labels, change sizes and colors and more.
+
 
 \section{GraphStyleRules}
 \label{s:graphStyleRules}
 
 \section{GraphPanelConfig}
-The GraphPanelConfig is a configuration object for a GraphPanel. It contains the most general configurable aspects as well as additional configuration objects, namely a \emph{WaitConfig}, \emph{ProjectionConfig}, \emph{RulesConfig} and a \emph{CaptureConfig}. The general configuration structure is shown in figure \ref{fig:configstruct}.
+The GraphPanelConfig is a configuration object for a GraphPanel. It contains the most general configurable aspects as well as additional configuration objects, namely a \emph{WaitConfig}, \emph{ToolTipsConfig}, \emph{RulesConfig}, \emph{ProjectionConfig} and a \emph{CaptureConfig}. The general configuration structure is shown in figure \ref{fig:configstruct}.
 
 \begin{figure} [h]
 \centering
@@ -120,6 +132,34 @@ The WaitConfig object is used to configure special wait times used for smooth gr
 \caption{Configuration values of WaitConfig.}
 \label{tab:waitConfigValues}
 \end{table}
+
+\subsection{ToolTipsConfig}
+\label{ss:toolTipsConfig}
+In order to define which ToolTips will be displayed and how they are ordered and initialized one can use ToolTipsConfigs. The default ToolTipsConfig looks as follows:
+\begin{lstlisting}
+"ToolTipsConfig": {
+	"Enabled": true,
+	"dna.visualization.graph.toolTips.infoLabel.NodeDegreeLabel": {
+		"Name": "Degree",
+		"Index": 1
+	},
+	"dna.visualization.graph.toolTips.infoLabel.NodeIdLabel": {
+		"Name": "Node",
+		"Index": 0
+	},
+	"dna.visualization.graph.toolTips.button.FreezeButton": {
+		"Name": "FreezeButton",
+		"Index": 2
+	},
+	"dna.visualization.graph.toolTips.button.HighlightButton": {
+		"Name": "HighlightButton",
+		"Growth": 15.0,
+		"Index": 3
+	}
+}
+\end{lstlisting}
+The ToolTipsConfig only has one static config field, which is \emph{Enabled} and can be set true or false in order to enable/disable ToolTips. Additionally, all used ToolTips can be defined using their respective class-path as a key. The contained \emph{Name} field will be used to uniquely identify the ToolTips. The \emph{Index} field is used to set the order in which ToolTips will be shown in the visualization. All additional defined values (e.g. \emph{Growth} in the HighlightButton definition) will be handed over to the ToolTip constructor as parameters, see section \ref{s:impl-tooltips} for more details about the implementation.
+
 
 \subsection{RulesConfig}
 \label{ss:rulesConfig}

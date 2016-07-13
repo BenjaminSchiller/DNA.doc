@@ -25,6 +25,25 @@ The interface is divided into two different areas, the graph area and the inform
 \label{ex:ui-information}
 \end{figure}
 
+
+\subsection{ToolTips}
+\label{ss:toolTips}
+ToolTips are a special part of the graph visualization. They reveal additional information to the user and offer basic interactions with the underlying graph. Each node in the graph may have its own ToolTips, which can be shown and hidden by clicking the node with the right mouse-button. Figure \ref{fig:ToolTip} illustrates how the default ToolTips look like. Four ToolTips are visible: 
+\begin{enumerate}
+\item NodeIdLabel: Shows the node id.
+\item NodeDegreeLabel: Shows the nodes degree.
+\item FreezeButton: May be clicked to toggle freeze-mode on the node. This will (mostly) prevent the node to be moved during layouting and dragging of adjacent nodes.
+\item HighlightButton: May be clicked several times to highlight the node, increasing its size.
+\end{enumerate}
+These ToolTips build the basic and default ToolTips to be used in gvis. However, the implementation of customized ToolTips is easy and will be discussed in section \ref{s:impl-tooltips}. How to enable ToolTips using the GraphVisConfig will be explained in section \ref{ss:toolTipsConfig}.
+
+\begin{figure} [h]
+\centering
+\includegraphics [scale=0.85] {images/tooltip}
+\caption{Example of the default ToolTips.}
+\label{fig:ToolTip}
+\end{figure}
+
 \section{Getting started}
 \label{s:start}
 Using the graph visualization part of DNA is very simple. It can be enabled/disabled with:
